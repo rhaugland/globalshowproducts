@@ -33,7 +33,7 @@ export default function SearchPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
-      <h1 className="text-3xl font-bold text-navy">Search</h1>
+      <h1 className="text-3xl font-bold text-brand-gray">Search</h1>
 
       <form onSubmit={handleSubmit} className="mt-6 flex gap-3">
         <input
@@ -42,11 +42,11 @@ export default function SearchPage() {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Search products..."
-          className="flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+          className="flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
         />
         <button
           type="submit"
-          className="rounded-lg bg-orange px-6 py-2 font-semibold text-white hover:bg-orange/90 transition"
+          className="rounded-lg bg-brand-red px-6 py-2 font-semibold text-white hover:bg-brand-red-dark transition"
         >
           Search
         </button>

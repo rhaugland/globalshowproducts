@@ -69,3 +69,7 @@ export function getFeaturedProducts(count: number = 8): Product[] {
 export function getSpecials(): Product[] {
   return products.filter((p) => p.compareAtPrice !== null);
 }
+
+export function getSaleProducts(): Product[] {
+  return products.filter((p) => p.compareAtPrice !== null);
+}

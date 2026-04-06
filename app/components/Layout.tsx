@@ -16,7 +16,7 @@ export function AppLayout({children}: {children: React.ReactNode}) {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-cream text-charcoal">
+    <div className="flex min-h-screen flex-col bg-white text-brand-gray">
       <Header cartCount={cartCount} />
       <main className="flex-1">{children}</main>
       <Footer />

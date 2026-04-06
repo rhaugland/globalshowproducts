@@ -5,21 +5,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Brand colors from globalshowproducts.com
-        navy: '#1a2744',
-        orange: '#bb4a28',
-        green: '#82c80b',
-        cyan: '#01acd3',
-        cream: '#fafaf8',
-        charcoal: '#2a2a2a',
-        sage: '#deeae6',
+        // Brand colors matched from globalshowproducts.com
+        brand: {
+          red: '#e74c4c',
+          'red-dark': '#d43f3f',
+          gray: '#32373c',
+          'gray-light': '#636d7c',
+          pink: '#ff6b81',
+        },
+        // Accent pops (from their product pages / brand logos)
+        pop: {
+          green: '#82c80b',
+          cyan: '#01acd3',
+          orange: '#f5a623',
+          purple: '#9b59b6',
+        },
       },
       fontFamily: {
         sans: ['Nunito', 'system-ui', 'sans-serif'],
-      },
-      backgroundImage: {
-        'hero-gradient': 'linear-gradient(135deg, #1a2744 0%, #01acd3 100%)',
-        'fun-gradient': 'linear-gradient(135deg, #bb4a28 0%, #82c80b 100%)',
       },
       keyframes: {
         'bounce-in': {

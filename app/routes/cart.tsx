@@ -22,13 +22,13 @@ export default function CartPage() {
   if (cart.length === 0) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-16 text-center">
-        <h1 className="text-3xl font-bold text-navy">Your Cart is Empty</h1>
+        <h1 className="text-3xl font-bold text-brand-gray">Your Cart is Empty</h1>
         <p className="mt-3 text-gray-500">
           Looks like you haven&apos;t added anything yet.
         </p>
         <Link
           to="/collections"
-          className="mt-6 inline-block rounded-lg bg-orange px-6 py-3 font-semibold text-white hover:bg-orange/90 transition"
+          className="mt-6 inline-block rounded-lg bg-brand-red px-6 py-3 font-semibold text-white hover:bg-brand-red-dark transition"
         >
           Continue Shopping
         </Link>
@@ -38,7 +38,7 @@ export default function CartPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
-      <h1 className="text-3xl font-bold text-navy">Your Cart</h1>
+      <h1 className="text-3xl font-bold text-brand-gray">Your Cart</h1>
 
       <div className="mt-8">
         {cart.map((item) => (
@@ -53,7 +53,7 @@ export default function CartPage() {
 
       {/* Summary */}
       <div className="mt-8 border-t border-gray-200 pt-6">
-        <div className="flex justify-between text-lg font-semibold text-navy">
+        <div className="flex justify-between text-lg font-semibold text-brand-gray">
           <span>Subtotal</span>
           <span>{formatPrice(subtotal)}</span>
         </div>
@@ -64,13 +64,13 @@ export default function CartPage() {
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-between">
           <Link
             to="/collections"
-            className="text-center text-orange hover:underline font-medium"
+            className="text-center text-brand-red hover:underline font-medium"
           >
             Continue Shopping
           </Link>
           <Link
             to="/checkout"
-            className="rounded-lg bg-orange px-8 py-3 text-center font-semibold text-white hover:bg-orange/90 transition"
+            className="rounded-lg bg-brand-red px-8 py-3 text-center font-semibold text-white hover:bg-brand-red-dark transition"
           >
             Proceed to Checkout
           </Link>

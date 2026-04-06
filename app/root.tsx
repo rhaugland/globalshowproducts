@@ -1,4 +1,3 @@
-import {useNonce} from '@shopify/hydrogen';
 import {
   Outlet,
   useRouteError,
@@ -9,7 +8,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router';
-import type {Route} from './+types/root';
 import favicon from '~/assets/favicon.svg';
 import tailwindStyles from '~/styles/tailwind.css?url';
 import {AppLayout} from '~/components/Layout';
@@ -38,17 +36,13 @@ export function links() {
   ];
 }
 
-export async function loader(args: Route.LoaderArgs) {
-  const {env} = args.context;
-
+export async function loader() {
   return {
-    publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
+    publicStoreDomain: 'globalshowproducts.com',
   };
 }
 
 export function Layout({children}: {children?: React.ReactNode}) {
-  const nonce = useNonce();
-
   return (
     <html lang="en">
       <head>
@@ -57,10 +51,10 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-cream text-charcoal font-sans">
+      <body className="bg-white text-brand-gray font-sans">
         {children}
-        <ScrollRestoration nonce={nonce} />
-        <Scripts nonce={nonce} />
+        <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );
@@ -89,8 +83,8 @@ export function ErrorBoundary() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-navy">Oops</h1>
-        <h2 className="mt-2 text-2xl text-orange">{errorStatus}</h2>
+        <h1 className="text-4xl font-bold text-brand-gray">Oops</h1>
+        <h2 className="mt-2 text-2xl text-brand-red">{errorStatus}</h2>
         {errorMessage && (
           <pre className="mt-4 rounded bg-gray-100 p-4 text-sm">
             {errorMessage}

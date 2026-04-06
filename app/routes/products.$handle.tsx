@@ -18,11 +18,11 @@ export default function ProductPage() {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-navy">404</h1>
+          <h1 className="text-4xl font-bold text-brand-gray">404</h1>
           <p className="mt-2 text-gray-600">Product not found.</p>
           <Link
             to="/collections"
-            className="mt-4 inline-block text-orange hover:underline"
+            className="mt-4 inline-block text-brand-red hover:underline"
           >
             Back to shop
           </Link>
@@ -54,7 +54,7 @@ export default function ProductPage() {
     <div className="mx-auto max-w-7xl px-4 py-12">
       <Link
         to="/collections"
-        className="text-sm text-gray-500 hover:text-navy"
+        className="text-sm text-gray-500 hover:text-brand-gray"
       >
         &larr; Back to shop
       </Link>
@@ -72,12 +72,12 @@ export default function ProductPage() {
           <p className="text-sm font-medium uppercase tracking-wide text-gray-500">
             {product.brand}
           </p>
-          <h1 className="mt-1 text-3xl font-bold text-navy">
+          <h1 className="mt-1 text-3xl font-bold text-brand-gray">
             {product.title}
           </h1>
 
           <div className="mt-4 flex items-center gap-3">
-            <span className="text-2xl font-bold text-navy">
+            <span className="text-2xl font-bold text-brand-gray">
               {formatPrice(product.price, product.currency)}
             </span>
             {product.compareAtPrice && (
@@ -90,7 +90,7 @@ export default function ProductPage() {
           <div className="mt-3 flex items-center gap-2">
             <span
               className={`inline-block h-2.5 w-2.5 rounded-full ${
-                product.available ? 'bg-green' : 'bg-red-500'
+                product.available ? 'bg-pop-green' : 'bg-red-500'
               }`}
             />
             <span className="text-sm text-gray-600">
@@ -118,8 +118,8 @@ export default function ProductPage() {
               !product.available
                 ? 'cursor-not-allowed bg-gray-300'
                 : addedToCart
-                  ? 'bg-green'
-                  : 'bg-orange hover:bg-orange/90'
+                  ? 'bg-pop-green'
+                  : 'bg-brand-red hover:bg-brand-red-dark'
             }`}
           >
             {addedToCart ? 'Added to Cart \u2713' : 'Add to Cart'}

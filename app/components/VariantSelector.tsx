@@ -51,8 +51,8 @@ export function VariantSelector({
                   onClick={() => onSelect(option.variantId)}
                   className={`rounded-md border px-3 py-1.5 text-sm font-medium transition ${
                     isSelected
-                      ? 'border-navy bg-navy text-white'
-                      : 'border-gray-300 bg-white text-charcoal hover:border-navy'
+                      ? 'border-brand-gray bg-brand-gray text-white'
+                      : 'border-gray-300 bg-white text-brand-gray hover:border-brand-gray'
                   }`}
                 >
                   {option.value}

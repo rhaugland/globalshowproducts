@@ -6,7 +6,7 @@ import {formatPrice} from '~/lib/utils';
 
 function StatusBadge({status}: {status: string}) {
   const colorMap: Record<string, string> = {
-    Delivered: 'bg-green/10 text-green',
+    Delivered: 'bg-pop-green/10 text-pop-green',
     Shipped: 'bg-blue-100 text-blue-700',
     Processing: 'bg-yellow-100 text-yellow-700',
     Cancelled: 'bg-red-100 text-red-700',
@@ -52,11 +52,11 @@ export default function AccountPage() {
   if (!loggedIn) {
     return (
       <div className="mx-auto max-w-md px-4 py-16 text-center">
-        <h1 className="text-3xl font-bold text-navy">My Account</h1>
+        <h1 className="text-3xl font-bold text-brand-gray">My Account</h1>
         <p className="mt-4 text-gray-500">Please sign in to view your account.</p>
         <Link
           to="/account/login"
-          className="mt-6 inline-block rounded-lg bg-orange px-6 py-3 font-semibold text-white hover:bg-orange/90 transition"
+          className="mt-6 inline-block rounded-lg bg-brand-red px-6 py-3 font-semibold text-white hover:bg-brand-red-dark transition"
         >
           Sign In
         </Link>
@@ -67,7 +67,7 @@ export default function AccountPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-navy">My Account</h1>
+        <h1 className="text-3xl font-bold text-brand-gray">My Account</h1>
         <button
           type="button"
           onClick={handleLogout}
@@ -79,7 +79,7 @@ export default function AccountPage() {
 
       {/* Profile Section */}
       <div className="mt-8 rounded-lg border border-gray-200 p-6">
-        <h2 className="text-lg font-bold text-navy">Profile</h2>
+        <h2 className="text-lg font-bold text-brand-gray">Profile</h2>
         <div className="mt-4 space-y-3">
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium text-gray-500 w-16">Name</span>
@@ -89,12 +89,12 @@ export default function AccountPage() {
                   type="text"
                   value={nameValue}
                   onChange={(e) => setNameValue(e.target.value)}
-                  className="rounded-lg border border-gray-300 px-3 py-1 text-sm focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                  className="rounded-lg border border-gray-300 px-3 py-1 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
                 <button
                   type="button"
                   onClick={handleSaveName}
-                  className="text-sm font-medium text-green hover:underline"
+                  className="text-sm font-medium text-pop-green hover:underline"
                 >
                   Save
                 </button>
@@ -111,11 +111,11 @@ export default function AccountPage() {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <span className="text-sm text-navy">{user?.name}</span>
+                <span className="text-sm text-brand-gray">{user?.name}</span>
                 <button
                   type="button"
                   onClick={() => setEditingName(true)}
-                  className="text-sm text-orange hover:underline"
+                  className="text-sm text-brand-red hover:underline"
                 >
                   Edit
                 </button>
@@ -124,14 +124,14 @@ export default function AccountPage() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium text-gray-500 w-16">Email</span>
-            <span className="text-sm text-navy">{user?.email}</span>
+            <span className="text-sm text-brand-gray">{user?.email}</span>
           </div>
         </div>
       </div>
 
       {/* Order History */}
       <div className="mt-8">
-        <h2 className="text-lg font-bold text-navy">Order History</h2>
+        <h2 className="text-lg font-bold text-brand-gray">Order History</h2>
         {orders.length === 0 ? (
           <p className="mt-4 text-gray-500">No orders yet.</p>
         ) : (
@@ -143,7 +143,7 @@ export default function AccountPage() {
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-3">
-                    <span className="font-semibold text-navy">{order.id}</span>
+                    <span className="font-semibold text-brand-gray">{order.id}</span>
                     <StatusBadge status={order.status} />
                   </div>
                   <span className="text-sm text-gray-500">{order.date}</span>
@@ -157,7 +157,7 @@ export default function AccountPage() {
                     </p>
                   ))}
                 </div>
-                <div className="mt-3 text-right font-semibold text-navy">
+                <div className="mt-3 text-right font-semibold text-brand-gray">
                   Total: {formatPrice(order.total)}
                 </div>
               </div>

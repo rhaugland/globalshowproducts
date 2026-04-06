@@ -1,100 +1,175 @@
 import {useState} from 'react';
 import {Link} from 'react-router';
 
+const navItems = [
+  {
+    label: 'Our Brands',
+    to: '/collections',
+    children: [
+      {label: 'Euro Scooter', to: '/collections/scooters'},
+      {label: 'Funny Gears', to: '/collections/toys'},
+      {label: 'Ribbon Fair', to: '/collections/tools-kits'},
+      {label: 'Magic Sand', to: '/collections/toys'},
+    ],
+  },
+  {
+    label: 'Store',
+    to: '/collections',
+    children: [
+      {label: 'All Products', to: '/collections'},
+      {label: 'Home & Nature', to: '/collections/home-nature'},
+      {label: 'Scooters', to: '/collections/scooters'},
+      {label: 'Specials', to: '/collections/specials'},
+      {label: 'Tools & Kits', to: '/collections/tools-kits'},
+      {label: 'Toys', to: '/collections/toys'},
+    ],
+  },
+  {label: 'About', to: '/about'},
+  {label: 'Contact Us', to: '/about'},
+];
+
+function DesktopDropdown({item}: {item: (typeof navItems)[0]}) {
+  return (
+    <div className="group relative">
+      <Link
+        to={item.to}
+        className="flex items-center gap-1 py-4 text-sm font-semibold text-brand-gray transition-colors hover:text-brand-red"
+      >
+        {item.label}
+        {item.children && (
+          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        )}
+      </Link>
+      {item.children && (
+        <div className="invisible absolute left-0 top-full z-50 min-w-[200px] rounded-b-lg border border-t-0 border-gray-200 bg-white py-2 shadow-lg opacity-0 transition-all group-hover:visible group-hover:opacity-100">
+          {item.children.map((child) => (
+            <Link
+              key={child.label}
+              to={child.to}
+              className="block px-4 py-2 text-sm text-brand-gray transition-colors hover:bg-gray-50 hover:text-brand-red"
+            >
+              {child.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MobileAccordion({
+  item,
+  onNavigate,
+}: {
+  item: (typeof navItems)[0];
+  onNavigate: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  if (!item.children) {
+    return (
+      <Link
+        to={item.to}
+        className="block border-b border-gray-100 px-4 py-3 text-sm font-semibold text-brand-gray hover:text-brand-red"
+        onClick={onNavigate}
+      >
+        {item.label}
+      </Link>
+    );
+  }
+
+  return (
+    <div className="border-b border-gray-100">
+      <button
+        className="flex w-full items-center justify-between px-4 py-3 text-sm font-semibold text-brand-gray hover:text-brand-red"
+        onClick={() => setOpen(!open)}
+      >
+        {item.label}
+        <svg
+          className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="bg-gray-50 pb-2">
+          {item.children.map((child) => (
+            <Link
+              key={child.label}
+              to={child.to}
+              className="block px-8 py-2 text-sm text-brand-gray-light hover:text-brand-red"
+              onClick={onNavigate}
+            >
+              {child.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Header({cartCount}: {cartCount: number}) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 bg-white shadow-md">
-      {/* Top accent bar */}
-      <div className="h-1 bg-fun-gradient" />
+    <header className="sticky top-0 z-40">
+      {/* Tier 1: Utility bar */}
+      <div className="bg-brand-gray text-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1.5">
+          <div className="flex items-center gap-4">
+            <Link to="/about" className="text-xs text-white/70 transition-colors hover:text-white">
+              Contact Us
+            </Link>
+            <span className="text-white/30">|</span>
+            <Link to="/account" className="text-xs text-white/70 transition-colors hover:text-white">
+              My Account
+            </Link>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link to="/search" aria-label="Search" className="p-1 text-white/70 transition-colors hover:text-white">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+              </svg>
+            </Link>
+            <Link to="/cart" aria-label="Cart" className="relative p-1 text-white/70 transition-colors hover:text-white">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5h12.8M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand-red text-[10px] font-bold text-white">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+          </div>
+        </div>
+      </div>
 
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        {/* Left: Logo */}
-        <Link to="/" className="flex items-center gap-3">
-          <img
-            src="/images/logo.jpg"
-            alt="Global Show Products"
-            className="h-10 w-auto"
-          />
-        </Link>
-
-        {/* Center: Desktop nav */}
-        <nav className="hidden gap-8 md:flex">
-          <Link to="/collections" className="font-semibold text-charcoal transition-colors hover:text-orange">
-            Shop
-          </Link>
-          <Link to="/collections/scooters" className="font-semibold text-charcoal transition-colors hover:text-cyan">
-            Scooters
-          </Link>
-          <Link to="/collections/toys" className="font-semibold text-charcoal transition-colors hover:text-green">
-            Toys
-          </Link>
-          <Link to="/about" className="font-semibold text-charcoal transition-colors hover:text-orange">
-            About
-          </Link>
-        </nav>
-
-        {/* Right: Icon links */}
-        <div className="flex items-center gap-4">
-          {/* Search */}
-          <Link to="/search" aria-label="Search" className="rounded-full p-2 text-charcoal transition-colors hover:bg-sage hover:text-cyan">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
-              />
-            </svg>
+      {/* Tier 2: Main nav */}
+      <div className="border-b border-gray-200 bg-white shadow-sm">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
+          {/* Logo */}
+          <Link to="/" className="flex items-center py-2">
+            <img
+              src="/images/logo.jpg"
+              alt="Global Show Products"
+              className="h-12 w-auto"
+            />
           </Link>
 
-          {/* Account */}
-          <Link to="/account" aria-label="Account" className="rounded-full p-2 text-charcoal transition-colors hover:bg-sage hover:text-cyan">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-          </Link>
-
-          {/* Cart */}
-          <Link to="/cart" aria-label="Cart" className="relative rounded-full p-2 text-charcoal transition-colors hover:bg-sage hover:text-cyan">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5h12.8M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
-              />
-            </svg>
-            {cartCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 animate-bounce-in items-center justify-center rounded-full bg-orange text-[11px] font-bold text-white">
-                {cartCount}
-              </span>
-            )}
-          </Link>
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-6 md:flex">
+            {navItems.map((item) => (
+              <DesktopDropdown key={item.label} item={item} />
+            ))}
+          </nav>
 
           {/* Mobile hamburger */}
           <button
@@ -102,14 +177,7 @@ export function Header({cartCount}: {cartCount: number}) {
             aria-label="Toggle menu"
             onClick={() => setMobileOpen((prev) => !prev)}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-charcoal"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
+            <svg className="h-6 w-6 text-brand-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               {mobileOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               ) : (
@@ -120,21 +188,16 @@ export function Header({cartCount}: {cartCount: number}) {
         </div>
       </div>
 
-      {/* Mobile nav */}
+      {/* Mobile menu */}
       {mobileOpen && (
-        <nav className="border-t border-gray-100 bg-white px-4 pb-4 md:hidden">
-          <Link to="/collections" className="block py-2 font-semibold text-charcoal hover:text-orange" onClick={() => setMobileOpen(false)}>
-            Shop All
-          </Link>
-          <Link to="/collections/scooters" className="block py-2 font-semibold text-charcoal hover:text-cyan" onClick={() => setMobileOpen(false)}>
-            Scooters
-          </Link>
-          <Link to="/collections/toys" className="block py-2 font-semibold text-charcoal hover:text-green" onClick={() => setMobileOpen(false)}>
-            Toys
-          </Link>
-          <Link to="/about" className="block py-2 font-semibold text-charcoal hover:text-orange" onClick={() => setMobileOpen(false)}>
-            About
-          </Link>
+        <nav className="border-b border-gray-200 bg-white md:hidden">
+          {navItems.map((item) => (
+            <MobileAccordion
+              key={item.label}
+              item={item}
+              onNavigate={() => setMobileOpen(false)}
+            />
+          ))}
         </nav>
       )}
     </header>

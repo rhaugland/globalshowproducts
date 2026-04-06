@@ -60,13 +60,13 @@ export default function CheckoutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
       {/* Demo banner */}
-      <div className="mb-8 rounded-lg border-2 border-orange bg-orange/5 px-4 py-3 text-center">
-        <p className="font-semibold text-orange">
+      <div className="mb-8 rounded-lg border-2 border-brand-red bg-brand-red/5 px-4 py-3 text-center">
+        <p className="font-semibold text-brand-red">
           Demo Mode &mdash; No real transactions will be processed
         </p>
       </div>
 
-      <h1 className="text-3xl font-bold text-navy">Checkout</h1>
+      <h1 className="text-3xl font-bold text-brand-gray">Checkout</h1>
 
       {/* Progress bar */}
       <div className="mt-6 flex items-center gap-2">
@@ -75,7 +75,7 @@ export default function CheckoutPage() {
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
                 i <= currentStepIndex
-                  ? 'bg-orange text-white'
+                  ? 'bg-brand-red text-white'
                   : 'bg-gray-200 text-gray-500'
               }`}
             >
@@ -83,7 +83,7 @@ export default function CheckoutPage() {
             </div>
             <span
               className={`hidden text-sm font-medium sm:block ${
-                i <= currentStepIndex ? 'text-navy' : 'text-gray-400'
+                i <= currentStepIndex ? 'text-brand-gray' : 'text-gray-400'
               }`}
             >
               {s.label}
@@ -91,7 +91,7 @@ export default function CheckoutPage() {
             {i < STEPS.length - 1 && (
               <div
                 className={`mx-2 h-0.5 flex-1 ${
-                  i < currentStepIndex ? 'bg-orange' : 'bg-gray-200'
+                  i < currentStepIndex ? 'bg-brand-red' : 'bg-gray-200'
                 }`}
               />
             )}
@@ -103,7 +103,7 @@ export default function CheckoutPage() {
         {/* Step 1: Shipping */}
         {step === 'shipping' && (
           <div>
-            <h2 className="text-xl font-bold text-navy">Shipping Information</h2>
+            <h2 className="text-xl font-bold text-brand-gray">Shipping Information</h2>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -118,7 +118,7 @@ export default function CheckoutPage() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
               <div>
@@ -128,7 +128,7 @@ export default function CheckoutPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
               <div>
@@ -137,7 +137,7 @@ export default function CheckoutPage() {
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
               <div className="sm:col-span-2">
@@ -147,7 +147,7 @@ export default function CheckoutPage() {
                   required
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
               <div>
@@ -157,7 +157,7 @@ export default function CheckoutPage() {
                   required
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -168,7 +168,7 @@ export default function CheckoutPage() {
                     required
                     value={state}
                     onChange={(e) => setState(e.target.value)}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                   />
                 </div>
                 <div>
@@ -178,14 +178,14 @@ export default function CheckoutPage() {
                     required
                     value={zip}
                     onChange={(e) => setZip(e.target.value)}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                   />
                 </div>
               </div>
               <div className="sm:col-span-2">
                 <button
                   type="submit"
-                  className="w-full rounded-lg bg-orange px-6 py-3 font-semibold text-white hover:bg-orange/90 transition"
+                  className="w-full rounded-lg bg-brand-red px-6 py-3 font-semibold text-white hover:bg-brand-red-dark transition"
                 >
                   Continue to Shipping Method
                 </button>
@@ -197,14 +197,14 @@ export default function CheckoutPage() {
         {/* Step 2: Shipping Method */}
         {step === 'method' && (
           <div>
-            <h2 className="text-xl font-bold text-navy">Shipping Method</h2>
+            <h2 className="text-xl font-bold text-brand-gray">Shipping Method</h2>
             <div className="mt-6 space-y-3">
               {SHIPPING_OPTIONS.map((option) => (
                 <label
                   key={option.id}
                   className={`flex cursor-pointer items-center justify-between rounded-lg border-2 px-4 py-3 transition ${
                     shippingMethod === option.id
-                      ? 'border-orange bg-orange/5'
+                      ? 'border-brand-red bg-brand-red/5'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
@@ -215,11 +215,11 @@ export default function CheckoutPage() {
                       value={option.id}
                       checked={shippingMethod === option.id}
                       onChange={() => setShippingMethod(option.id)}
-                      className="accent-orange"
+                      className="accent-brand-red"
                     />
-                    <span className="font-medium text-navy">{option.label}</span>
+                    <span className="font-medium text-brand-gray">{option.label}</span>
                   </div>
-                  <span className="font-semibold text-navy">
+                  <span className="font-semibold text-brand-gray">
                     {option.price === 0 ? 'FREE' : formatPrice(option.price)}
                   </span>
                 </label>
@@ -236,7 +236,7 @@ export default function CheckoutPage() {
               <button
                 type="button"
                 onClick={() => setStep('payment')}
-                className="flex-1 rounded-lg bg-orange px-6 py-3 font-semibold text-white hover:bg-orange/90 transition"
+                className="flex-1 rounded-lg bg-brand-red px-6 py-3 font-semibold text-white hover:bg-brand-red-dark transition"
               >
                 Continue to Payment
               </button>
@@ -247,14 +247,14 @@ export default function CheckoutPage() {
         {/* Step 3: Payment */}
         {step === 'payment' && (
           <div>
-            <h2 className="text-xl font-bold text-navy">Payment</h2>
+            <h2 className="text-xl font-bold text-brand-gray">Payment</h2>
             <div className="mt-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Card Number</label>
                 <input
                   type="text"
                   defaultValue="4242 4242 4242 4242"
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -263,7 +263,7 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     defaultValue="12/28"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                   />
                 </div>
                 <div>
@@ -271,7 +271,7 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     defaultValue="123"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                   />
                 </div>
               </div>
@@ -279,7 +279,7 @@ export default function CheckoutPage() {
 
             {/* Order Summary */}
             <div className="mt-8 rounded-lg bg-gray-50 p-6">
-              <h3 className="font-bold text-navy">Order Summary</h3>
+              <h3 className="font-bold text-brand-gray">Order Summary</h3>
               <div className="mt-4 space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
@@ -295,7 +295,7 @@ export default function CheckoutPage() {
                   <span className="text-gray-600">Tax (8.25%)</span>
                   <span className="font-medium">{formatPrice(tax)}</span>
                 </div>
-                <div className="flex justify-between border-t border-gray-200 pt-2 text-base font-bold text-navy">
+                <div className="flex justify-between border-t border-gray-200 pt-2 text-base font-bold text-brand-gray">
                   <span>Total</span>
                   <span>{formatPrice(total)}</span>
                 </div>
@@ -313,7 +313,7 @@ export default function CheckoutPage() {
               <button
                 type="button"
                 onClick={handlePlaceOrder}
-                className="flex-1 rounded-lg bg-green px-6 py-3 font-semibold text-white hover:bg-green/90 transition"
+                className="flex-1 rounded-lg bg-pop-green px-6 py-3 font-semibold text-white hover:bg-pop-green/90 transition"
               >
                 Place Order (Demo)
               </button>
@@ -324,19 +324,19 @@ export default function CheckoutPage() {
         {/* Step 4: Confirmation */}
         {step === 'confirmation' && (
           <div className="text-center py-8">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green/10">
-              <span className="text-4xl text-green">&#10003;</span>
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-pop-green/10">
+              <span className="text-4xl text-pop-green">&#10003;</span>
             </div>
-            <h2 className="mt-6 text-2xl font-bold text-navy">Order Confirmed!</h2>
+            <h2 className="mt-6 text-2xl font-bold text-brand-gray">Order Confirmed!</h2>
             <p className="mt-2 text-gray-600">
-              Your order ID is <span className="font-bold text-navy">{orderId}</span>
+              Your order ID is <span className="font-bold text-brand-gray">{orderId}</span>
             </p>
             <p className="mt-4 text-sm text-gray-500">
               This is a demo &mdash; no real transaction was processed and no items will be shipped.
             </p>
             <Link
               to="/collections"
-              className="mt-8 inline-block rounded-lg bg-orange px-8 py-3 font-semibold text-white hover:bg-orange/90 transition"
+              className="mt-8 inline-block rounded-lg bg-brand-red px-8 py-3 font-semibold text-white hover:bg-brand-red-dark transition"
             >
               Continue Shopping
             </Link>

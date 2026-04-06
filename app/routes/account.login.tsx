@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-16">
-      <h1 className="text-3xl font-bold text-navy text-center">Sign In</h1>
+      <h1 className="text-3xl font-bold text-brand-gray text-center">Sign In</h1>
 
       {error && (
         <div className="mt-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
@@ -37,7 +37,7 @@ export default function LoginPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+            className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
           />
         </div>
         <div>
@@ -47,12 +47,12 @@ export default function LoginPage() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-orange focus:outline-none focus:ring-1 focus:ring-orange"
+            className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
           />
         </div>
         <button
           type="submit"
-          className="w-full rounded-lg bg-orange px-6 py-3 font-semibold text-white hover:bg-orange/90 transition"
+          className="w-full rounded-lg bg-brand-red px-6 py-3 font-semibold text-white hover:bg-brand-red-dark transition"
         >
           Sign In
         </button>
@@ -60,7 +60,7 @@ export default function LoginPage() {
 
       <p className="mt-6 text-center text-sm text-gray-500">
         Don&apos;t have an account?{' '}
-        <Link to="/account/register" className="text-orange hover:underline font-medium">
+        <Link to="/account/register" className="text-brand-red hover:underline font-medium">
           Create one
         </Link>
       </p>

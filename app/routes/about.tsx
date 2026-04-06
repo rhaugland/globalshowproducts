@@ -29,7 +29,7 @@ export default function AboutPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
-      <h1 className="text-3xl font-bold text-navy">About Us</h1>
+      <h1 className="text-3xl font-bold text-brand-gray">About Us</h1>
 
       <div className="mt-8 space-y-5 text-gray-700 leading-relaxed">
         <p>
@@ -55,14 +55,14 @@ export default function AboutPage() {
 
       {/* Our Brands */}
       <div className="mt-12">
-        <h2 className="text-2xl font-bold text-navy">Our Brands</h2>
+        <h2 className="text-2xl font-bold text-brand-gray">Our Brands</h2>
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {brands.map((brand) => (
             <div
               key={brand.name}
-              className="rounded-lg border border-gray-200 p-5 hover:border-orange/50 hover:shadow-sm transition"
+              className="rounded-lg border border-gray-200 p-5 hover:border-brand-red/50 hover:shadow-sm transition"
             >
-              <h3 className="font-bold text-navy">{brand.name}</h3>
+              <h3 className="font-bold text-brand-gray">{brand.name}</h3>
               <p className="mt-2 text-sm text-gray-600">{brand.description}</p>
             </div>
           ))}

@@ -19,12 +19,12 @@ export function CartLineItem({item, onUpdateQuantity, onRemove}: CartLineItemPro
       <div className="flex flex-1 flex-col">
         <div className="flex justify-between">
           <div>
-            <h3 className="font-semibold text-navy">{item.title}</h3>
+            <h3 className="font-semibold text-brand-gray">{item.title}</h3>
             {item.variantTitle && item.variantTitle !== 'Default' && (
               <p className="mt-0.5 text-sm text-gray-500">{item.variantTitle}</p>
             )}
           </div>
-          <p className="font-semibold text-navy">
+          <p className="font-semibold text-brand-gray">
             {formatPrice(item.price * item.quantity)}
           </p>
         </div>
