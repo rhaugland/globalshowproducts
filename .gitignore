@@ -10,3 +10,4 @@ node_modules
 !.env.example
 .shopify
 .react-router
+shopify-products.csv
