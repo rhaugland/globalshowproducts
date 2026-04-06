@@ -5,19 +5,32 @@ export function Header({cartCount}: {cartCount: number}) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 bg-navy text-white shadow-md">
+    <header className="sticky top-0 z-40 bg-white shadow-md">
+      {/* Top accent bar */}
+      <div className="h-1 bg-fun-gradient" />
+
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        {/* Left: Brand */}
-        <Link to="/" className="text-lg font-bold tracking-tight">
-          Global Show Products
+        {/* Left: Logo */}
+        <Link to="/" className="flex items-center gap-3">
+          <img
+            src="/images/logo.jpg"
+            alt="Global Show Products"
+            className="h-10 w-auto"
+          />
         </Link>
 
         {/* Center: Desktop nav */}
-        <nav className="hidden gap-6 md:flex">
-          <Link to="/collections" className="hover:text-orange transition-colors">
+        <nav className="hidden gap-8 md:flex">
+          <Link to="/collections" className="font-semibold text-charcoal transition-colors hover:text-orange">
             Shop
           </Link>
-          <Link to="/about" className="hover:text-orange transition-colors">
+          <Link to="/collections/scooters" className="font-semibold text-charcoal transition-colors hover:text-cyan">
+            Scooters
+          </Link>
+          <Link to="/collections/toys" className="font-semibold text-charcoal transition-colors hover:text-green">
+            Toys
+          </Link>
+          <Link to="/about" className="font-semibold text-charcoal transition-colors hover:text-orange">
             About
           </Link>
         </nav>
@@ -25,7 +38,7 @@ export function Header({cartCount}: {cartCount: number}) {
         {/* Right: Icon links */}
         <div className="flex items-center gap-4">
           {/* Search */}
-          <Link to="/search" aria-label="Search" className="hover:text-orange transition-colors">
+          <Link to="/search" aria-label="Search" className="rounded-full p-2 text-charcoal transition-colors hover:bg-sage hover:text-cyan">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -43,7 +56,7 @@ export function Header({cartCount}: {cartCount: number}) {
           </Link>
 
           {/* Account */}
-          <Link to="/account" aria-label="Account" className="hover:text-orange transition-colors">
+          <Link to="/account" aria-label="Account" className="rounded-full p-2 text-charcoal transition-colors hover:bg-sage hover:text-cyan">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -61,7 +74,7 @@ export function Header({cartCount}: {cartCount: number}) {
           </Link>
 
           {/* Cart */}
-          <Link to="/cart" aria-label="Cart" className="relative hover:text-orange transition-colors">
+          <Link to="/cart" aria-label="Cart" className="relative rounded-full p-2 text-charcoal transition-colors hover:bg-sage hover:text-cyan">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -77,7 +90,7 @@ export function Header({cartCount}: {cartCount: number}) {
               />
             </svg>
             {cartCount > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-orange text-[10px] font-bold text-white">
+              <span className="absolute -right-1 -top-1 flex h-5 w-5 animate-bounce-in items-center justify-center rounded-full bg-orange text-[11px] font-bold text-white">
                 {cartCount}
               </span>
             )}
@@ -91,7 +104,7 @@ export function Header({cartCount}: {cartCount: number}) {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-6 w-6 text-charcoal"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -109,19 +122,17 @@ export function Header({cartCount}: {cartCount: number}) {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="border-t border-white/10 px-4 pb-4 md:hidden">
-          <Link
-            to="/collections"
-            className="block py-2 hover:text-orange transition-colors"
-            onClick={() => setMobileOpen(false)}
-          >
-            Shop
+        <nav className="border-t border-gray-100 bg-white px-4 pb-4 md:hidden">
+          <Link to="/collections" className="block py-2 font-semibold text-charcoal hover:text-orange" onClick={() => setMobileOpen(false)}>
+            Shop All
           </Link>
-          <Link
-            to="/about"
-            className="block py-2 hover:text-orange transition-colors"
-            onClick={() => setMobileOpen(false)}
-          >
+          <Link to="/collections/scooters" className="block py-2 font-semibold text-charcoal hover:text-cyan" onClick={() => setMobileOpen(false)}>
+            Scooters
+          </Link>
+          <Link to="/collections/toys" className="block py-2 font-semibold text-charcoal hover:text-green" onClick={() => setMobileOpen(false)}>
+            Toys
+          </Link>
+          <Link to="/about" className="block py-2 font-semibold text-charcoal hover:text-orange" onClick={() => setMobileOpen(false)}>
             About
           </Link>
         </nav>
