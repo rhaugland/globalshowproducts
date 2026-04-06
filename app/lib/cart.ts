@@ -17,7 +17,7 @@ function persist(items: CartItem[]): void {
 export function getCart(): CartItem[] {
   try {
     const raw = localStorage.getItem(CART_KEY);
-    return raw ? JSON.parse(raw) : [];
+    return raw ? (JSON.parse(raw) as CartItem[]) : [];
   } catch {
     return [];
   }
