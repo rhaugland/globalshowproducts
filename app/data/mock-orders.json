@@ -1,0 +1,27 @@
+[
+  {
+    "id": "ORD-1001",
+    "date": "2026-03-15",
+    "status": "Delivered",
+    "items": [
+      {"title": "Roma E Mobile Euro Scooter 2025 MODEL", "variant": "Red", "quantity": 1, "price": 4695.00}
+    ],
+    "subtotal": 4695.00,
+    "shipping": 0,
+    "tax": 387.34,
+    "total": 5082.34
+  },
+  {
+    "id": "ORD-1002",
+    "date": "2026-03-28",
+    "status": "Shipped",
+    "items": [
+      {"title": "Funny Gears / Funny Bricks Gear Toys", "variant": "Default", "quantity": 2, "price": 30.00},
+      {"title": "Deluxe Ribbon Magic Bow Maker Kit", "variant": "Default", "quantity": 1, "price": 29.99}
+    ],
+    "subtotal": 89.99,
+    "shipping": 5.99,
+    "tax": 7.42,
+    "total": 103.40
+  }
+]
