@@ -9,29 +9,29 @@ export default function Homepage() {
 
   return (
     <div>
-      {/* Hero with gradient */}
-      <section className="bg-hero-gradient px-4 py-24 text-center text-white">
+      {/* Hero */}
+      <section className="bg-navy px-4 py-24 text-center text-white">
         <img
           src="/images/logo.jpg"
           alt="Global Show Products"
-          className="mx-auto h-16 w-auto rounded-lg bg-white/90 p-2 shadow-lg"
+          className="mx-auto h-16 w-auto rounded-lg bg-white p-2 shadow-lg"
         />
         <h1 className="mt-6 text-4xl font-extrabold md:text-5xl">
           Crafts, Toys & Scooters
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
           Home of Ribbon Fair Crafts & Games and Euro Scooters — quality products for every occasion!
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             to="/collections"
-            className="rounded-full bg-orange px-8 py-3 text-lg font-bold text-white shadow-lg transition hover:scale-105 hover:bg-orange/90"
+            className="rounded-full border-2 border-white bg-white px-8 py-3 text-lg font-bold text-navy shadow-lg transition hover:scale-105 hover:bg-white/90"
           >
             Shop Now
           </Link>
           <Link
             to="/collections/scooters"
-            className="rounded-full bg-white/20 px-8 py-3 text-lg font-bold text-white backdrop-blur transition hover:scale-105 hover:bg-white/30"
+            className="rounded-full border-2 border-orange bg-orange px-8 py-3 text-lg font-bold text-white transition hover:scale-105 hover:bg-orange/90"
           >
             Explore Scooters
           </Link>
