@@ -73,3 +73,36 @@ export function getSpecials(): Product[] {
 export function getSaleProducts(): Product[] {
   return products.filter((p) => p.compareAtPrice !== null);
 }
+
+export function getRelatedProducts(productId: string, count: number = 4): Product[] {
+  const product = products.find((p) => p.id === productId);
+  if (!product) return [];
+
+  // Find products in the same collections or with the same brand, excluding self
+  const scored = products
+    .filter((p) => p.id !== productId)
+    .map((p) => {
+      let score = 0;
+      if (p.brand === product.brand) score += 3;
+      const sharedCollections = p.collectionIds.filter((c) => product.collectionIds.includes(c));
+      score += sharedCollections.length * 2;
+      const sharedTags = p.tags.filter((t) => product.tags.includes(t));
+      score += sharedTags.length;
+      return {product: p, score};
+    })
+    .sort((a, b) => b.score - a.score);
+
+  return scored.slice(0, count).map((s) => s.product);
+}
+
+export function getAllProducts(): Product[] {
+  return products;
+}
+
+export function getProductById(id: string): Product | null {
+  return products.find((p) => p.id === id) ?? null;
+}
+
+export function getBrands(): string[] {
+  return [...new Set(products.map((p) => p.brand))].sort();
+}

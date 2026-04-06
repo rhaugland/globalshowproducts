@@ -1,6 +1,7 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {Link, useNavigate} from 'react-router';
 import {getCart, getCartTotal, clearCart} from '~/lib/cart';
+import type {CartItem} from '~/lib/cart';
 import {formatPrice} from '~/lib/utils';
 
 type Step = 'shipping' | 'method' | 'payment' | 'confirmation';
@@ -35,6 +36,10 @@ export default function CheckoutPage() {
   // Method
   const [shippingMethod, setShippingMethod] = useState('standard');
 
+  // Keep a snapshot of cart items for the confirmation page
+  const confirmedItemsRef = useRef<CartItem[]>([]);
+  const confirmedAddressRef = useRef({name: '', address: '', city: '', state: '', zip: ''});
+
   const cart = getCart();
   const subtotal = getCartTotal();
   const shippingCost =
@@ -50,6 +55,8 @@ export default function CheckoutPage() {
 
   function handlePlaceOrder() {
     const id = `ORD-${Date.now().toString(36).toUpperCase()}`;
+    confirmedItemsRef.current = getCart();
+    confirmedAddressRef.current = {name, address, city, state, zip};
     setOrderId(id);
     clearCart();
     setStep('confirmation');
@@ -280,7 +287,38 @@ export default function CheckoutPage() {
             {/* Order Summary */}
             <div className="mt-8 rounded-lg bg-gray-50 p-6">
               <h3 className="font-bold text-brand-gray">Order Summary</h3>
-              <div className="mt-4 space-y-2 text-sm">
+
+              {/* Cart items */}
+              <div className="mt-4 space-y-3">
+                {cart.map((item) => (
+                  <div key={item.variantId} className="flex items-center gap-3">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-white border border-gray-200">
+                      <span className="text-[8px] font-semibold text-gray-400">IMG</span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium text-brand-gray">{item.title}</p>
+                      {item.variantTitle !== 'Default' && (
+                        <p className="text-xs text-gray-400">{item.variantTitle}</p>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-brand-gray">{formatPrice(item.price * item.quantity)}</p>
+                      <p className="text-xs text-gray-400">Qty: {item.quantity}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Shipping address */}
+              <div className="mt-4 border-t border-gray-200 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">Ship to</p>
+                <p className="mt-1 text-sm text-brand-gray">{name}</p>
+                <p className="text-sm text-gray-600">{address}</p>
+                <p className="text-sm text-gray-600">{city}, {state} {zip}</p>
+              </div>
+
+              {/* Totals */}
+              <div className="mt-4 space-y-2 border-t border-gray-200 pt-4 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
                   <span className="font-medium">{formatPrice(subtotal)}</span>
@@ -323,23 +361,64 @@ export default function CheckoutPage() {
 
         {/* Step 4: Confirmation */}
         {step === 'confirmation' && (
-          <div className="text-center py-8">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-pop-green/10">
-              <span className="text-4xl text-pop-green">&#10003;</span>
+          <div className="py-8">
+            <div className="text-center">
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-pop-green/10">
+                <span className="text-4xl text-pop-green">&#10003;</span>
+              </div>
+              <h2 className="mt-6 text-2xl font-bold text-brand-gray">Order Confirmed!</h2>
+              <p className="mt-2 text-gray-600">
+                Your order ID is <span className="font-bold text-brand-gray">{orderId}</span>
+              </p>
+              <p className="mt-4 text-sm text-gray-500">
+                This is a demo &mdash; no real transaction was processed and no items will be shipped.
+              </p>
             </div>
-            <h2 className="mt-6 text-2xl font-bold text-brand-gray">Order Confirmed!</h2>
-            <p className="mt-2 text-gray-600">
-              Your order ID is <span className="font-bold text-brand-gray">{orderId}</span>
-            </p>
-            <p className="mt-4 text-sm text-gray-500">
-              This is a demo &mdash; no real transaction was processed and no items will be shipped.
-            </p>
-            <Link
-              to="/collections"
-              className="mt-8 inline-block rounded-lg bg-brand-red px-8 py-3 font-semibold text-white hover:bg-brand-red-dark transition"
-            >
-              Continue Shopping
-            </Link>
+
+            {/* Order details */}
+            <div className="mt-8 rounded-lg border border-gray-200 p-6">
+              <h3 className="font-bold text-brand-gray">Order Details</h3>
+
+              {/* Items */}
+              <div className="mt-4 space-y-3">
+                {confirmedItemsRef.current.map((item) => (
+                  <div key={item.variantId} className="flex items-center gap-3">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gray-50 border border-gray-200">
+                      <span className="text-[8px] font-semibold text-gray-400">IMG</span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium text-brand-gray">{item.title}</p>
+                      {item.variantTitle !== 'Default' && (
+                        <p className="text-xs text-gray-400">{item.variantTitle}</p>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-brand-gray">{formatPrice(item.price * item.quantity)}</p>
+                      <p className="text-xs text-gray-400">Qty: {item.quantity}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Shipping address */}
+              <div className="mt-4 border-t border-gray-200 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">Shipping to</p>
+                <p className="mt-1 text-sm font-medium text-brand-gray">{confirmedAddressRef.current.name}</p>
+                <p className="text-sm text-gray-600">{confirmedAddressRef.current.address}</p>
+                <p className="text-sm text-gray-600">
+                  {confirmedAddressRef.current.city}, {confirmedAddressRef.current.state} {confirmedAddressRef.current.zip}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 text-center">
+              <Link
+                to="/collections"
+                className="inline-block rounded-lg bg-brand-red px-8 py-3 font-semibold text-white hover:bg-brand-red-dark transition"
+              >
+                Continue Shopping
+              </Link>
+            </div>
           </div>
         )}
       </div>

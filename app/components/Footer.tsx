@@ -2,10 +2,10 @@ import {Link} from 'react-router';
 
 const helpLinks = [
   {label: 'My Account', to: '/account'},
-  {label: 'Contact Us', to: '/about'},
-  {label: 'Privacy Policy', to: '/about'},
-  {label: 'Shipping Info', to: '/about'},
-  {label: 'Terms of Use', to: '/about'},
+  {label: 'Contact Us', to: '/contact'},
+  {label: 'Privacy Policy', to: '/privacy'},
+  {label: 'Track Shipments', to: '/tracking'},
+  {label: 'Terms of Use', to: '/terms'},
 ];
 
 const categoryLinks = [
@@ -14,6 +14,11 @@ const categoryLinks = [
   {label: 'Specials', to: '/collections/specials'},
   {label: 'Tools & Kits', to: '/collections/tools-kits'},
   {label: 'Toys', to: '/collections/toys'},
+];
+
+const interactLinks = [
+  {label: 'Upcoming Events', to: '/events'},
+  {label: 'Videos', to: '/videos'},
 ];
 
 const socialLinks = [
@@ -43,7 +48,7 @@ export function Footer() {
   return (
     <footer className="bg-brand-gray text-white">
       <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           {/* Column 1: Help */}
           <div>
             <h4 className="mb-3 text-sm font-bold uppercase tracking-wider text-brand-red">
@@ -107,7 +112,23 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 5: Product Categories */}
+          {/* Column 5: Interact */}
+          <div>
+            <h4 className="mb-3 text-sm font-bold uppercase tracking-wider text-brand-red">
+              Interact
+            </h4>
+            <ul className="space-y-2">
+              {interactLinks.map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to} className="text-sm text-white/70 transition-colors hover:text-white">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 6: Product Categories */}
           <div>
             <h4 className="mb-3 text-sm font-bold uppercase tracking-wider text-brand-red">
               Product Categories
@@ -127,9 +148,14 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 border-t border-white/10 pt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
           <img src="/images/logo.jpg" alt="Global Show Products" className="h-8 w-auto rounded bg-white p-0.5" />
-          <p className="text-xs text-white/40">
-            &copy; {new Date().getFullYear()} Global Show Products. All rights reserved.
-          </p>
+          <div className="flex items-center gap-4">
+            <Link to="/admin" className="text-xs text-white/50 transition-colors hover:text-white">
+              Admin — Add Events or Videos
+            </Link>
+            <p className="text-xs text-white/40">
+              &copy; {new Date().getFullYear()} Global Show Products. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

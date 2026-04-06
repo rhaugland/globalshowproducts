@@ -1,5 +1,7 @@
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import {Link} from 'react-router';
+import {SearchOverlay} from './SearchOverlay';
+import {CartDrawer} from './CartDrawer';
 
 const navItems = [
   {
@@ -25,7 +27,15 @@ const navItems = [
     ],
   },
   {label: 'About', to: '/about'},
-  {label: 'Contact Us', to: '/about'},
+  {
+    label: 'Interact',
+    to: '/events',
+    children: [
+      {label: 'Upcoming Events', to: '/events'},
+      {label: 'Videos', to: '/videos'},
+    ],
+  },
+  {label: 'Contact Us', to: '/contact'},
 ];
 
 function DesktopDropdown({item}: {item: (typeof navItems)[0]}) {
@@ -117,6 +127,10 @@ function MobileAccordion({
 
 export function Header({cartCount}: {cartCount: number}) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
+  const closeCart = useCallback(() => setCartOpen(false), []);
 
   return (
     <header className="sticky top-0 z-40">
@@ -124,31 +138,32 @@ export function Header({cartCount}: {cartCount: number}) {
       <div className="bg-brand-gray text-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1.5">
           <div className="flex items-center gap-4">
-            <Link to="/about" className="text-xs text-white/70 transition-colors hover:text-white">
+            <Link to="/contact" className="text-xs text-white/70 transition-colors hover:text-white">
               Contact Us
             </Link>
             <span className="text-white/30">|</span>
             <Link to="/account" className="text-xs text-white/70 transition-colors hover:text-white">
               My Account
             </Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link to="/search" aria-label="Search" className="p-1 text-white/70 transition-colors hover:text-white">
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+            <span className="text-white/30">|</span>
+            <Link to="/wishlist" className="flex items-center gap-1 text-xs text-white/70 transition-colors hover:text-white">
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
-            </Link>
-            <Link to="/cart" aria-label="Cart" className="relative p-1 text-white/70 transition-colors hover:text-white">
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5h12.8M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
-              </svg>
-              {cartCount > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand-red text-[10px] font-bold text-white">
-                  {cartCount}
-                </span>
-              )}
+              Wishlist
             </Link>
           </div>
+          {/* Search bar */}
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs text-white/60 transition hover:bg-white/20 hover:text-white/80"
+          >
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+            </svg>
+            <span className="hidden sm:inline">Search for products</span>
+            <span className="sm:hidden">Search</span>
+          </button>
         </div>
       </div>
 
@@ -164,27 +179,50 @@ export function Header({cartCount}: {cartCount: number}) {
             />
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden items-center gap-6 md:flex">
-            {navItems.map((item) => (
-              <DesktopDropdown key={item.label} item={item} />
-            ))}
-          </nav>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden"
-            aria-label="Toggle menu"
-            onClick={() => setMobileOpen((prev) => !prev)}
-          >
-            <svg className="h-6 w-6 text-brand-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              {mobileOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          {/* Desktop nav + cart */}
+          <div className="hidden items-center gap-6 md:flex">
+            <nav className="flex items-center gap-6">
+              {navItems.map((item) => (
+                <DesktopDropdown key={item.label} item={item} />
+              ))}
+            </nav>
+            <button onClick={() => setCartOpen(true)} aria-label="Cart" className="relative p-2 text-brand-gray transition-colors hover:text-brand-red">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5h12.8M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-red text-[10px] font-bold text-white shadow-sm">
+                  {cartCount}
+                </span>
               )}
-            </svg>
-          </button>
+            </button>
+          </div>
+
+          {/* Mobile: cart + hamburger */}
+          <div className="flex items-center gap-2 md:hidden">
+            <button onClick={() => setCartOpen(true)} aria-label="Cart" className="relative p-2 text-brand-gray transition-colors hover:text-brand-red">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5h12.8M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-red text-[10px] font-bold text-white shadow-sm">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+            <button
+              aria-label="Toggle menu"
+              onClick={() => setMobileOpen((prev) => !prev)}
+            >
+              <svg className="h-6 w-6 text-brand-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                {mobileOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -200,6 +238,9 @@ export function Header({cartCount}: {cartCount: number}) {
           ))}
         </nav>
       )}
+
+      <SearchOverlay open={searchOpen} onClose={closeSearch} />
+      <CartDrawer open={cartOpen} onClose={closeCart} />
     </header>
   );
 }
