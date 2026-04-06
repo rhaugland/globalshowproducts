@@ -1,0 +1,37 @@
+[
+  {
+    "id": "col-scooters",
+    "handle": "scooters",
+    "title": "Scooters",
+    "description": "Euro Scooter mobility scooters — Roma and Genoa models plus parts and accessories.",
+    "image": "/images/collections/scooters.jpg"
+  },
+  {
+    "id": "col-toys",
+    "handle": "toys",
+    "title": "Toys",
+    "description": "Fun for all ages — Funny Gears puzzles, Magic Sand, and Puzzle Car toys.",
+    "image": "/images/collections/toys.jpg"
+  },
+  {
+    "id": "col-tools-kits",
+    "handle": "tools-kits",
+    "title": "Tools & Kits",
+    "description": "Professional ribbon and bow-making tools from Ribbon Fair.",
+    "image": "/images/collections/tools-kits.jpg"
+  },
+  {
+    "id": "col-home-nature",
+    "handle": "home-nature",
+    "title": "Home & Nature",
+    "description": "Practical items for home and outdoor use.",
+    "image": "/images/collections/home-nature.jpg"
+  },
+  {
+    "id": "col-specials",
+    "handle": "specials",
+    "title": "Specials",
+    "description": "Limited-time deals and discounted products.",
+    "image": "/images/collections/specials.jpg"
+  }
+]

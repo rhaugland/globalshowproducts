@@ -1,0 +1,1098 @@
+[
+  {
+    "id": "prod-hover-ball",
+    "handle": "hover-ball-swoosh-ball",
+    "title": "Hover Ball Swoosh Ball",
+    "description": "Indoor/outdoor sport toy that floats on an air cushion with LED lights. Fun for the whole family.",
+    "brand": "GSP",
+    "collectionIds": ["col-toys"],
+    "price": 9.99,
+    "compareAtPrice": 14.99,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-hover-ball-default",
+        "title": "Default",
+        "price": 9.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["gsp", "toys", "sport", "led"],
+    "available": true
+  },
+  {
+    "id": "prod-magic-sand",
+    "handle": "magic-sand-glow-in-the-dark-kinetic-sand",
+    "title": "Magic SAND ~ Glow In the Dark Kinetic Sand",
+    "description": "4 colors of kinetic sand with sand play tray, castle and number shapes, shovel, rake, and glow flashlight. Glows in the dark for extra fun.",
+    "brand": "Magic Sand",
+    "collectionIds": ["col-toys"],
+    "price": 20.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-magic-sand-default",
+        "title": "Default",
+        "price": 20.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["magic sand", "toys", "kinetic", "glow"],
+    "available": true
+  },
+  {
+    "id": "prod-knee-hockey-goals",
+    "handle": "mylec-brand-knee-hockey-goal-nets",
+    "title": "Mylec Brand Knee Hockey Goal Nets",
+    "description": "Two junior-size hockey goals with sleeve-netting. Perfect for indoor knee hockey games.",
+    "brand": "Mylec",
+    "collectionIds": ["col-toys"],
+    "price": 24.99,
+    "compareAtPrice": 49.99,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-knee-hockey-goals-default",
+        "title": "Default",
+        "price": 24.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["mylec", "toys", "hockey", "sport"],
+    "available": true
+  },
+  {
+    "id": "prod-funny-gears",
+    "handle": "funny-gears-funny-bricks-gear-toys",
+    "title": "Funny Gears / Funny Bricks Gear Toys",
+    "description": "STEM/robotics learning toy with gears, bricks, and building elements. Educational fun for kids of all ages.",
+    "brand": "Funny Gears",
+    "collectionIds": ["col-toys"],
+    "price": 30.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-funny-gears-default",
+        "title": "Default",
+        "price": 30.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["funny gears", "toys", "stem", "building"],
+    "available": true
+  },
+  {
+    "id": "prod-funny-gears-expand-gears",
+    "handle": "funny-gears-expand-your-set-gears-gear-pins",
+    "title": "Funny Gears Expand Your Set – Gears, Gear Pins",
+    "description": "Extra gears, gear pins, monkeys, bears, hand crank, and playground accessories to expand your Funny Gears starter set.",
+    "brand": "Funny Gears",
+    "collectionIds": ["col-toys"],
+    "price": 4.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-funny-gears-expand-gears-default",
+        "title": "Default",
+        "price": 4.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["funny gears", "toys", "expansion", "accessories"],
+    "available": true
+  },
+  {
+    "id": "prod-funny-gears-expand-bricks",
+    "handle": "funny-gears-expand-your-set-building-bricks",
+    "title": "Funny Gears Expand Your Set – Building Bricks",
+    "description": "24-piece brick set for expanding your Funny Gears starter sets. Compatible with all Funny Gears products.",
+    "brand": "Funny Gears",
+    "collectionIds": ["col-toys"],
+    "price": 4.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-funny-gears-expand-bricks-default",
+        "title": "Default",
+        "price": 4.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["funny gears", "toys", "expansion", "bricks"],
+    "available": true
+  },
+  {
+    "id": "prod-funny-gears-expand-motor",
+    "handle": "funny-gears-expand-your-set-aa-gear-motor",
+    "title": "Funny Gears Expand Your Set – AA Gear Motor",
+    "description": "Extra gear drive motor for Funny Gears sets. Requires one AA battery (not included).",
+    "brand": "Funny Gears",
+    "collectionIds": ["col-toys"],
+    "price": 2.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-funny-gears-expand-motor-default",
+        "title": "Default",
+        "price": 2.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["funny gears", "toys", "motor", "accessories"],
+    "available": true
+  },
+  {
+    "id": "prod-puzzle-car-single",
+    "handle": "puzzle-car-single-replacement-vehicles",
+    "title": "Puzzle Car – Single/Replacement Vehicles",
+    "description": "Additional vehicles for puzzle track collector sets. Interchangeable pieces for creative play.",
+    "brand": "Puzzle Car",
+    "collectionIds": ["col-toys"],
+    "price": 8.50,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-puzzle-car-single-small",
+        "title": "Small Vehicle",
+        "price": 8.50,
+        "selectedOptions": [{ "name": "Size", "value": "Small" }],
+        "available": true
+      },
+      {
+        "id": "var-puzzle-car-single-medium",
+        "title": "Medium Vehicle",
+        "price": 14.00,
+        "selectedOptions": [{ "name": "Size", "value": "Medium" }],
+        "available": true
+      },
+      {
+        "id": "var-puzzle-car-single-large",
+        "title": "Large Vehicle",
+        "price": 22.00,
+        "selectedOptions": [{ "name": "Size", "value": "Large" }],
+        "available": true
+      }
+    ],
+    "tags": ["puzzle car", "toys", "vehicles", "collector"],
+    "available": true
+  },
+  {
+    "id": "prod-puzzle-car-collectors",
+    "handle": "puzzle-car-collectors-edition-set",
+    "title": "Puzzle Car Collectors Edition Set",
+    "description": "First puzzle set for ages 3+ with interchangeable pieces. Start your Puzzle Car collection here.",
+    "brand": "Puzzle Car",
+    "collectionIds": ["col-toys"],
+    "price": 22.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-puzzle-car-collectors-default",
+        "title": "Default",
+        "price": 22.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["puzzle car", "toys", "collector", "starter"],
+    "available": true
+  },
+  {
+    "id": "prod-ufo-flying-toy",
+    "handle": "my-ufo-flying-toy",
+    "title": "My UFO Flying Toy",
+    "description": "Fun flying toy for indoor and outdoor use. Easy to launch and control.",
+    "brand": "GSP",
+    "collectionIds": ["col-toys"],
+    "price": 8.99,
+    "compareAtPrice": 19.99,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-ufo-flying-toy-default",
+        "title": "Default",
+        "price": 8.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["gsp", "toys", "flying", "outdoor"],
+    "available": true
+  },
+  {
+    "id": "prod-bow-pin-holders",
+    "handle": "bow-pin-holders-pack-of-2-replacement",
+    "title": "Bow Pin Holders – Pack of 2 Replacement",
+    "description": "Replacement bow pin holders, pack of 2. Compatible with Ribbon Fair bow makers.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits", "col-specials"],
+    "price": 4.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-bow-pin-holders-default",
+        "title": "Default",
+        "price": 4.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "bow", "replacement"],
+    "available": true
+  },
+  {
+    "id": "prod-deluxe-razor-ribbon-shredder",
+    "handle": "deluxe-razor-ribbon-shredder",
+    "title": "Deluxe Razor Ribbon Shredder",
+    "description": "Professional-grade ribbon shredder for creating beautiful shredded ribbon decorations.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 8.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-deluxe-razor-ribbon-shredder-default",
+        "title": "Default",
+        "price": 8.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "shredder", "ribbon"],
+    "available": true
+  },
+  {
+    "id": "prod-deluxe-bow-maker-kit",
+    "handle": "deluxe-ribbon-magic-bow-maker-kit",
+    "title": "Deluxe Ribbon Magic Bow Maker Kit",
+    "description": "#1 BEST BOW MAKER KIT EVER SOLD. Great for all ages. Made in the USA. Everything you need to create professional bows.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 29.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-deluxe-bow-maker-kit-default",
+        "title": "Default",
+        "price": 29.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "bow maker", "usa"],
+    "available": true
+  },
+  {
+    "id": "prod-deluxe-shred-kit",
+    "handle": "deluxe-shred-kit",
+    "title": "Deluxe Shred Kit",
+    "description": "Complete shredding kit with everything you need to create stunning ribbon decorations.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 14.99,
+    "compareAtPrice": 19.99,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-deluxe-shred-kit-default",
+        "title": "Default",
+        "price": 14.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "shred", "kit"],
+    "available": true
+  },
+  {
+    "id": "prod-accessory-bundle-shredder",
+    "handle": "accessory-bundle-pack-for-ribbon-shredder",
+    "title": "Accessory Bundle Pack for Ribbon Shredder",
+    "description": "Bundle pack of accessories for your ribbon shredder. Includes replacement blades and attachments.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 14.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-accessory-bundle-shredder-default",
+        "title": "Default",
+        "price": 14.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "bundle", "accessories"],
+    "available": true
+  },
+  {
+    "id": "prod-curling-shredding-tool",
+    "handle": "ribbon-fairs-finest-curling-and-shredding-tool",
+    "title": "Ribbon Fair's Finest Curling and Shredding Tool",
+    "description": "Versatile curling and shredding tool for ribbon crafting. Easy to use for all skill levels.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 6.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-curling-shredding-tool-default",
+        "title": "Default",
+        "price": 6.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "curling", "shredding"],
+    "available": true
+  },
+  {
+    "id": "prod-original-bow-maker",
+    "handle": "original-ribbon-magic-bow-maker",
+    "title": "Original Ribbon Magic Bow Maker",
+    "description": "The original Ribbon Magic bow maker. Create beautiful professional bows with ease.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 19.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-original-bow-maker-default",
+        "title": "Default",
+        "price": 19.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "bow maker", "original"],
+    "available": true
+  },
+  {
+    "id": "prod-basic-shred-kit",
+    "handle": "basic-shred-kit",
+    "title": "Basic Shred Kit",
+    "description": "Starter shredding kit with essential tools for ribbon crafting beginners.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 9.99,
+    "compareAtPrice": 16.99,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-basic-shred-kit-default",
+        "title": "Default",
+        "price": 9.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "shred", "starter"],
+    "available": true
+  },
+  {
+    "id": "prod-bow-pins",
+    "handle": "bow-pins",
+    "title": "Bow Pins",
+    "description": "Essential bow pins for securing your ribbon bows. Available in multiple pack sizes.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 8.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-bow-pins-small",
+        "title": "Small Pack",
+        "price": 8.99,
+        "selectedOptions": [{ "name": "Pack Size", "value": "Small" }],
+        "available": true
+      },
+      {
+        "id": "var-bow-pins-medium",
+        "title": "Medium Pack",
+        "price": 16.00,
+        "selectedOptions": [{ "name": "Pack Size", "value": "Medium" }],
+        "available": true
+      },
+      {
+        "id": "var-bow-pins-large",
+        "title": "Large Pack",
+        "price": 28.00,
+        "selectedOptions": [{ "name": "Pack Size", "value": "Large" }],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "pins", "accessories"],
+    "available": true
+  },
+  {
+    "id": "prod-decorative-bow-wire",
+    "handle": "decorative-bow-wire",
+    "title": "Decorative Bow Wire",
+    "description": "Decorative wire for bow making. Available in multiple sizes and lengths.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 2.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-decorative-bow-wire-small",
+        "title": "Small Spool",
+        "price": 2.99,
+        "selectedOptions": [{ "name": "Size", "value": "Small" }],
+        "available": true
+      },
+      {
+        "id": "var-decorative-bow-wire-medium",
+        "title": "Medium Spool",
+        "price": 5.99,
+        "selectedOptions": [{ "name": "Size", "value": "Medium" }],
+        "available": true
+      },
+      {
+        "id": "var-decorative-bow-wire-large",
+        "title": "Large Spool",
+        "price": 9.89,
+        "selectedOptions": [{ "name": "Size", "value": "Large" }],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "wire", "decorative"],
+    "available": true
+  },
+  {
+    "id": "prod-slide-a-bow-maker",
+    "handle": "ribbon-fair-slide-a-bow-maker",
+    "title": "Ribbon Fair Slide A Bow Maker",
+    "description": "Easy-to-use slide bow maker for quick, professional-looking bows every time.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 9.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-slide-a-bow-maker-default",
+        "title": "Default",
+        "price": 9.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "bow maker", "slide"],
+    "available": true
+  },
+  {
+    "id": "prod-simply-shreds-book",
+    "handle": "simply-shreds-idea-book",
+    "title": "Simply Shreds Idea Book",
+    "description": "Inspiration and instruction book packed with creative ideas for ribbon shredding projects.",
+    "brand": "Ribbon Fair",
+    "collectionIds": ["col-tools-kits"],
+    "price": 3.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-simply-shreds-book-default",
+        "title": "Default",
+        "price": 3.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["ribbon fair", "tools-kits", "book", "ideas"],
+    "available": true
+  },
+  {
+    "id": "prod-gloria-keg-10l",
+    "handle": "gloria-keg-10-liter",
+    "title": "Gloria Keg 10 Liter",
+    "description": "Premium 10-liter Gloria keg for home and garden use. Durable construction built to last.",
+    "brand": "Gloria",
+    "collectionIds": ["col-home-nature"],
+    "price": 369.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-gloria-keg-10l-default",
+        "title": "Default",
+        "price": 369.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["gloria", "home-nature", "keg", "garden"],
+    "available": true
+  },
+  {
+    "id": "prod-gloria-keg-7l",
+    "handle": "gloria-keg-7-liter",
+    "title": "Gloria Keg 7 Liter",
+    "description": "Premium 7-liter Gloria keg for home and garden use. Compact and easy to handle.",
+    "brand": "Gloria",
+    "collectionIds": ["col-home-nature"],
+    "price": 269.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-gloria-keg-7l-default",
+        "title": "Default",
+        "price": 269.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["gloria", "home-nature", "keg", "garden"],
+    "available": true
+  },
+  {
+    "id": "prod-keg-extension-hose",
+    "handle": "keg-extension-hose-tap-accessory",
+    "title": "Keg Extension Hose Tap Accessory",
+    "description": "Extension hose tap accessory for Gloria kegs. Extends your reach for easier use.",
+    "brand": "Gloria",
+    "collectionIds": ["col-home-nature"],
+    "price": 15.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-keg-extension-hose-default",
+        "title": "Default",
+        "price": 15.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["gloria", "home-nature", "accessory", "hose"],
+    "available": true
+  },
+  {
+    "id": "prod-neck-fan",
+    "handle": "portable-neck-fan-rechargeable-3-cooling-speeds",
+    "title": "Portable Neck Fan, Rechargeable with 3 Cooling Speeds",
+    "description": "Stay cool anywhere with this portable rechargeable neck fan. Features 3 cooling speeds for personalized comfort.",
+    "brand": "GSP",
+    "collectionIds": ["col-home-nature"],
+    "price": 34.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-neck-fan-default",
+        "title": "Default",
+        "price": 34.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["gsp", "home-nature", "fan", "portable"],
+    "available": true
+  },
+  {
+    "id": "prod-battery-case-empty",
+    "handle": "battery-case-empty-for-replacement",
+    "title": "Battery Case Empty for Replacement",
+    "description": "Empty replacement battery case for Euro Scooter models. Swap batteries easily.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 25.00,
+    "compareAtPrice": 35.00,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-battery-case-empty-default",
+        "title": "Default",
+        "price": 25.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "battery", "replacement"],
+    "available": true
+  },
+  {
+    "id": "prod-deluxe-scooter-basket",
+    "handle": "deluxe-scooter-basket",
+    "title": "Deluxe Scooter Basket",
+    "description": "Spacious deluxe basket attachment for Euro Scooter models. Perfect for carrying essentials.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 49.99,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-deluxe-scooter-basket-default",
+        "title": "Default",
+        "price": 49.99,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "basket", "accessory"],
+    "available": true
+  },
+  {
+    "id": "prod-deluxe-scooter-seat",
+    "handle": "deluxe-scooter-seat-upgrade",
+    "title": "Deluxe Scooter Seat Upgrade",
+    "description": "Premium seat upgrade for Euro Scooter models. Enhanced comfort for longer rides.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 249.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-deluxe-scooter-seat-default",
+        "title": "Default",
+        "price": 249.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "seat", "upgrade"],
+    "available": true
+  },
+  {
+    "id": "prod-weatherproof-rain-cover",
+    "handle": "deluxe-weatherproof-protective-rain-cover",
+    "title": "Deluxe Weatherproof Protective Rain Cover",
+    "description": "Heavy-duty weatherproof rain cover to protect your Euro Scooter from the elements.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters", "col-specials"],
+    "price": 149.00,
+    "compareAtPrice": 179.00,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-weatherproof-rain-cover-default",
+        "title": "Default",
+        "price": 149.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "specials", "rain cover", "weatherproof"],
+    "available": true
+  },
+  {
+    "id": "prod-genoa-battery",
+    "handle": "emobile-euro-scooter-battery-for-genoa",
+    "title": "Emobile Euro Scooter Battery for GENOA (spare)",
+    "description": "Spare replacement battery for the GENOA Euro Scooter model. Keep a backup for extended range.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 229.00,
+    "compareAtPrice": 249.00,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-genoa-battery-default",
+        "title": "Default",
+        "price": 229.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "battery", "genoa"],
+    "available": true
+  },
+  {
+    "id": "prod-roma-battery",
+    "handle": "emobile-euro-scooter-battery-for-roma",
+    "title": "Emobile Euro Scooter Battery for Roma (spare)",
+    "description": "Spare replacement battery for the Roma Euro Scooter model. Keep a backup for extended range.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 219.00,
+    "compareAtPrice": 289.00,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-roma-battery-default",
+        "title": "Default",
+        "price": 219.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "battery", "roma"],
+    "available": true
+  },
+  {
+    "id": "prod-battery-charger",
+    "handle": "emobile-euro-scooter-battery-charger",
+    "title": "Emobile Euro Scooter Battery Charger (spare)",
+    "description": "Spare battery charger for Euro Scooter models. Compatible with Roma and Genoa batteries.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 48.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-battery-charger-default",
+        "title": "Default",
+        "price": 48.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "charger", "accessory"],
+    "available": true
+  },
+  {
+    "id": "prod-brake-handle",
+    "handle": "euro-scooter-brake-handle-replacement",
+    "title": "Euro Scooter Brake Handle Replacement",
+    "description": "Replacement brake handle for Euro Scooter models. Easy to install.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 22.00,
+    "compareAtPrice": 24.00,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-brake-handle-default",
+        "title": "Default",
+        "price": 22.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "brake", "replacement"],
+    "available": true
+  },
+  {
+    "id": "prod-motor-front-tire-kit",
+    "handle": "euro-scooter-motor-and-front-tire-kit",
+    "title": "Euro Scooter Motor and Front Tire Kit",
+    "description": "Complete motor and front tire replacement kit for Euro Scooter models.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 375.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-motor-front-tire-kit-default",
+        "title": "Default",
+        "price": 375.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "motor", "tire"],
+    "available": true
+  },
+  {
+    "id": "prod-front-tire-roma",
+    "handle": "front-large-tread-tire-roma-replacement",
+    "title": "Front Large Tread Tire – Roma Replacement",
+    "description": "Replacement front large tread tire for the Roma Euro Scooter model.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 99.00,
+    "compareAtPrice": 125.00,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-front-tire-roma-default",
+        "title": "Default",
+        "price": 99.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "tire", "roma"],
+    "available": true
+  },
+  {
+    "id": "prod-inner-tube-roma",
+    "handle": "front-tire-inner-tube-roma-replacement",
+    "title": "Front Tire Inner Tube – Roma Replacement",
+    "description": "Replacement inner tube for the Roma Euro Scooter front tire.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 29.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-inner-tube-roma-default",
+        "title": "Default",
+        "price": 29.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "inner tube", "roma"],
+    "available": true
+  },
+  {
+    "id": "prod-roma-charging-port",
+    "handle": "roma-charging-port-replacement-part",
+    "title": "Roma Charging Port Replacement Part",
+    "description": "Replacement charging port for the Roma Euro Scooter model.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 22.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-roma-charging-port-default",
+        "title": "Default",
+        "price": 22.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "charging port", "roma"],
+    "available": true
+  },
+  {
+    "id": "prod-roma-throttle-handle",
+    "handle": "roma-ld-6-throttle-handle-and-assembly-replacement",
+    "title": "ROMA LD-6 Throttle Handle and Assembly Replacement",
+    "description": "Replacement throttle handle and assembly for the Roma LD-6 Euro Scooter.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 48.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-roma-throttle-handle-default",
+        "title": "Default",
+        "price": 48.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "throttle", "roma"],
+    "available": true
+  },
+  {
+    "id": "prod-scooter-brochure",
+    "handle": "scooter-brochure",
+    "title": "Scooter Brochure",
+    "description": "Free informational brochure about Euro Scooter models and accessories.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 0.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-scooter-brochure-default",
+        "title": "Default",
+        "price": 0.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "brochure", "free"],
+    "available": true
+  },
+  {
+    "id": "prod-scooter-locking-trunk",
+    "handle": "scooter-locking-trunk-caddy",
+    "title": "Scooter Locking Trunk/Caddy",
+    "description": "Lockable trunk/caddy for Euro Scooter models. Secure storage while on the go.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 219.00,
+    "compareAtPrice": 249.00,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-scooter-locking-trunk-default",
+        "title": "Default",
+        "price": 219.00,
+        "selectedOptions": [],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "trunk", "storage"],
+    "available": true
+  },
+  {
+    "id": "prod-genoa-scooter",
+    "handle": "genoa-rear-wheel-drive-euro-scooter-2025-model",
+    "title": "GENOA Rear Wheel Drive Euro Scooter 2025 MODEL",
+    "description": "Premium rear wheel drive Euro Scooter. Free local pickup in MN & FL. Interest-free financing available.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters", "col-specials"],
+    "price": 4999.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-genoa-scooter-red",
+        "title": "Red",
+        "price": 4999.00,
+        "selectedOptions": [{ "name": "Color", "value": "Red" }],
+        "available": true
+      },
+      {
+        "id": "var-genoa-scooter-blue",
+        "title": "Blue",
+        "price": 4999.00,
+        "selectedOptions": [{ "name": "Color", "value": "Blue" }],
+        "available": true
+      },
+      {
+        "id": "var-genoa-scooter-silver",
+        "title": "Silver",
+        "price": 4999.00,
+        "selectedOptions": [{ "name": "Color", "value": "Silver" }],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "specials", "genoa", "2025"],
+    "available": true
+  },
+  {
+    "id": "prod-roma-scooter",
+    "handle": "roma-e-mobile-euro-scooter-2025-model",
+    "title": "Roma E Mobile Euro Scooter 2025 MODEL",
+    "description": "Premium E Mobile Euro Scooter. Free local pickup in MN & FL. Interest-free financing available.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 4695.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-roma-scooter-red",
+        "title": "Red",
+        "price": 4695.00,
+        "selectedOptions": [{ "name": "Color", "value": "Red" }],
+        "available": true
+      },
+      {
+        "id": "var-roma-scooter-blue",
+        "title": "Blue",
+        "price": 4695.00,
+        "selectedOptions": [{ "name": "Color", "value": "Blue" }],
+        "available": true
+      },
+      {
+        "id": "var-roma-scooter-silver",
+        "title": "Silver",
+        "price": 4695.00,
+        "selectedOptions": [{ "name": "Color", "value": "Silver" }],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "roma", "2025"],
+    "available": true
+  },
+  {
+    "id": "prod-capri-scooter",
+    "handle": "capri-lightweight-portable-scooter",
+    "title": "Capri Lightweight Portable Scooter",
+    "description": "Lightweight and portable Euro Scooter. Easy to transport and store. Perfect for travel.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 3999.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/placeholder.svg"],
+    "variants": [
+      {
+        "id": "var-capri-scooter-red",
+        "title": "Red",
+        "price": 3999.00,
+        "selectedOptions": [{ "name": "Color", "value": "Red" }],
+        "available": true
+      },
+      {
+        "id": "var-capri-scooter-blue",
+        "title": "Blue",
+        "price": 3999.00,
+        "selectedOptions": [{ "name": "Color", "value": "Blue" }],
+        "available": true
+      },
+      {
+        "id": "var-capri-scooter-silver",
+        "title": "Silver",
+        "price": 3999.00,
+        "selectedOptions": [{ "name": "Color", "value": "Silver" }],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "capri", "portable"],
+    "available": true
+  }
+]
