@@ -12,6 +12,7 @@ import {
 import type {Route} from './+types/root';
 import favicon from '~/assets/favicon.svg';
 import tailwindStyles from '~/styles/tailwind.css?url';
+import {AppLayout} from '~/components/Layout';
 
 export type RootLoader = typeof loader;
 
@@ -66,7 +67,11 @@ export function Layout({children}: {children?: React.ReactNode}) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <AppLayout>
+      <Outlet />
+    </AppLayout>
+  );
 }
 
 export function ErrorBoundary() {
