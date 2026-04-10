@@ -4,8 +4,8 @@ import {CART_QUERY_FRAGMENT} from '~/lib/fragments';
 
 /**
  * Creates Hydrogen context for React Router.
- * We provide real Shopify env vars so the Hydrogen runtime initializes,
- * but since all routes use mock data, no actual Storefront API calls are made.
+ * When PUBLIC_STOREFRONT_API_TOKEN is set, creates a real Storefront client.
+ * Otherwise, Hydrogen initializes without API access (mock mode).
  */
 export async function createHydrogenRouterContext(
   request: Request,
