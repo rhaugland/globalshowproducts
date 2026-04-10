@@ -3,6 +3,23 @@ import {Link, useNavigate} from 'react-router';
 import {getCart, getCartTotal, clearCart} from '~/lib/cart';
 import type {CartItem} from '~/lib/cart';
 import {formatPrice} from '~/lib/utils';
+import type {Route} from './+types/checkout';
+
+export async function loader({context}: Route.LoaderArgs) {
+  const isShopify = !!context.storefront;
+  let checkoutUrl: string | null = null;
+
+  if (isShopify && context.cart) {
+    try {
+      const cart = await context.cart.get();
+      checkoutUrl = cart?.checkoutUrl || null;
+    } catch {
+      // Cart may not exist yet
+    }
+  }
+
+  return {isShopify, checkoutUrl};
+}
 
 type Step = 'shipping' | 'method' | 'payment' | 'confirmation';
 
@@ -19,8 +36,30 @@ const SHIPPING_OPTIONS = [
   {id: 'free', label: 'Free Shipping', price: 0},
 ];
 
-export default function CheckoutPage() {
+export default function CheckoutPage({loaderData}: Route.ComponentProps) {
+  const {isShopify, checkoutUrl} = loaderData;
   const navigate = useNavigate();
+
+  // If in Shopify mode with a valid checkout URL, redirect
+  useEffect(() => {
+    if (isShopify && checkoutUrl) {
+      window.location.href = checkoutUrl;
+    }
+  }, [isShopify, checkoutUrl]);
+
+  // If Shopify mode, show redirect message
+  if (isShopify) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-12 text-center">
+        <h1 className="text-2xl font-bold text-brand-gray">Redirecting to checkout...</h1>
+        <p className="mt-4 text-gray-600">
+          {checkoutUrl
+            ? 'Taking you to secure checkout...'
+            : 'Please add items to your cart first.'}
+        </p>
+      </div>
+    );
+}
   const [step, setStep] = useState<Step>('shipping');
   const [orderId, setOrderId] = useState('');
 

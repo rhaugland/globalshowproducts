@@ -3,8 +3,26 @@ import {Link} from 'react-router';
 import {getCart, updateQuantity, removeFromCart} from '~/lib/cart';
 import {formatPrice} from '~/lib/utils';
 import {CartLineItem} from '~/components/CartLineItem';
+import type {Route} from './+types/cart';
 
-export default function CartPage() {
+export async function loader({context}: Route.LoaderArgs) {
+  const isShopify = !!context.storefront;
+  let checkoutUrl: string | null = null;
+
+  if (isShopify && context.cart) {
+    try {
+      const cart = await context.cart.get();
+      checkoutUrl = cart?.checkoutUrl || null;
+    } catch {
+      // Cart may not exist yet
+    }
+  }
+
+  return {isShopify, checkoutUrl};
+}
+
+export default function CartPage({loaderData}: Route.ComponentProps) {
+  const {checkoutUrl} = loaderData;
   const [cart, setCart] = useState(getCart);
 
   function handleUpdateQuantity(variantId: string, quantity: number) {
@@ -68,12 +86,12 @@ export default function CartPage() {
           >
             Continue Shopping
           </Link>
-          <Link
-            to="/checkout"
+          <a
+            href={checkoutUrl || '/checkout'}
             className="rounded-lg bg-brand-red px-8 py-3 text-center font-semibold text-white hover:bg-brand-red-dark transition"
           >
             Proceed to Checkout
-          </Link>
+          </a>
         </div>
       </div>
     </div>
