@@ -11,6 +11,7 @@ export default async function (req: Request): Promise<Response> {
     env: {
       SESSION_SECRET: process.env.SESSION_SECRET || 'dev-secret',
       PUBLIC_STORE_DOMAIN: process.env.PUBLIC_STORE_DOMAIN || '',
+      PUBLIC_STOREFRONT_API_TOKEN: process.env.PUBLIC_STOREFRONT_API_TOKEN || '',
     },
   });
 }
