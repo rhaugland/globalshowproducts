@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
-import {useParams, Link} from 'react-router';
-import {getProductByHandle, getRelatedProducts} from '~/lib/mock-storefront';
+import {Link} from 'react-router';
+import type {Route} from './+types/products.$handle';
+import {getProductByHandle, getRelatedProducts} from '~/lib/storefront';
 import {addToCart} from '~/lib/cart';
 import {formatPrice} from '~/lib/utils';
 import {getReviewsForProduct, getAverageRating, getReviewCount} from '~/lib/reviews';
@@ -9,9 +10,17 @@ import {VariantSelector} from '~/components/VariantSelector';
 import {StarRating} from '~/components/StarRating';
 import {ProductCard} from '~/components/ProductCard';
 
-export default function ProductPage() {
-  const {handle} = useParams();
-  const product = handle ? getProductByHandle(handle) : null;
+export async function loader({params, context}: Route.LoaderArgs) {
+  const product = await getProductByHandle(params.handle!, context.storefront);
+  if (!product) {
+    throw new Response('Product not found', {status: 404});
+  }
+  const related = await getRelatedProducts(product.id, 4, context.storefront);
+  return {product, related};
+}
+
+export default function ProductPage({loaderData}: Route.ComponentProps) {
+  const {product, related} = loaderData;
 
   const [selectedVariantId, setSelectedVariantId] = useState(
     product?.variants[0]?.id ?? '',
@@ -23,25 +32,10 @@ export default function ProductPage() {
     if (product) setWishlisted(isInWishlist(product.id));
   }, [product]);
 
-  if (!product) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-brand-gray">404</h1>
-          <p className="mt-2 text-gray-600">Product not found.</p>
-          <Link to="/collections" className="mt-4 inline-block text-brand-red hover:underline">
-            Back to shop
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   const selectedVariant = product.variants.find((v) => v.id === selectedVariantId);
   const reviews = getReviewsForProduct(product.id);
   const avgRating = getAverageRating(product.id);
   const reviewCount = getReviewCount(product.id);
-  const related = getRelatedProducts(product.id, 4);
 
   function handleAddToCart() {
     if (!selectedVariant || !product) return;
