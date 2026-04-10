@@ -1,14 +1,23 @@
 import {Link} from 'react-router';
-import {getCollections, getFeaturedProducts, getSaleProducts} from '~/lib/mock-storefront';
+import type {Route} from './+types/_index';
+import {getCollections, getFeaturedProducts, getSaleProducts} from '~/lib/storefront';
 import {CollectionCard} from '~/components/CollectionCard';
 import {ProductGrid} from '~/components/ProductGrid';
 import {HeroCarousel} from '~/components/HeroCarousel';
 import {SaleCarousel} from '~/components/SaleCarousel';
 
-export default function Homepage() {
-  const collections = getCollections();
-  const featuredProducts = getFeaturedProducts(8);
-  const saleProducts = getSaleProducts();
+export async function loader({context}: Route.LoaderArgs) {
+  const storefront = context?.storefront;
+  const [collections, featuredProducts, saleProducts] = await Promise.all([
+    getCollections(storefront),
+    getFeaturedProducts(8, storefront),
+    getSaleProducts(storefront),
+  ]);
+  return {collections, featuredProducts, saleProducts};
+}
+
+export default function Homepage({loaderData}: Route.ComponentProps) {
+  const {collections, featuredProducts, saleProducts} = loaderData;
 
   return (
     <div>
