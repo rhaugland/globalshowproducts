@@ -1,9 +1,7 @@
+import type {Route} from './+types/collections.$handle';
 import {useState, useMemo} from 'react';
-import {useParams, Link} from 'react-router';
-import {
-  getCollectionByHandle,
-  getProductsByCollection,
-} from '~/lib/mock-storefront';
+import {Link} from 'react-router';
+import {getCollectionByHandle} from '~/lib/storefront';
 import type {Product} from '~/lib/mock-storefront';
 import {ProductGrid} from '~/components/ProductGrid';
 
@@ -23,19 +21,24 @@ function sortProducts(products: Product[], sort: SortOption): Product[] {
   }
 }
 
-export default function CollectionPage() {
-  const {handle} = useParams();
+export async function loader({params, context}: Route.LoaderArgs) {
+  const {collection, products} = await getCollectionByHandle(
+    params.handle!,
+    context.storefront,
+  );
+  if (!collection) {
+    throw new Response('Collection not found', {status: 404});
+  }
+  return {collection, products};
+}
+
+export default function CollectionPage({loaderData}: Route.ComponentProps) {
+  const {collection, products: allProducts} = loaderData;
   const [sort, setSort] = useState<SortOption>('default');
   const [filterBrand, setFilterBrand] = useState('all');
   const [filterAvailability, setFilterAvailability] = useState<'all' | 'in-stock' | 'on-sale'>('all');
   const [filterPriceMax, setFilterPriceMax] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
-
-  const collection = handle ? getCollectionByHandle(handle) : null;
-  const allProducts = useMemo(() => {
-    if (!collection) return [];
-    return getProductsByCollection(collection.id);
-  }, [collection]);
 
   const brands = useMemo(() => {
     return [...new Set(allProducts.map((p) => p.brand))].sort();
@@ -66,20 +69,6 @@ export default function CollectionPage() {
     filterAvailability !== 'all',
     filterPriceMax !== null,
   ].filter(Boolean).length;
-
-  if (!collection) {
-    return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-brand-gray">404</h1>
-          <p className="mt-2 text-gray-600">Collection not found.</p>
-          <Link to="/collections" className="mt-4 inline-block text-brand-red hover:underline">
-            Back to Collections
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   function clearFilters() {
     setFilterBrand('all');

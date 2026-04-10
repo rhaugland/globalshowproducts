@@ -1,8 +1,14 @@
-import {getCollections} from '~/lib/mock-storefront';
+import type {Route} from './+types/collections._index';
+import {getCollections} from '~/lib/storefront';
 import {CollectionCard} from '~/components/CollectionCard';
 
-export default function CollectionsIndex() {
-  const collections = getCollections();
+export async function loader({context}: Route.LoaderArgs) {
+  const collections = await getCollections(context.storefront);
+  return {collections};
+}
+
+export default function CollectionsIndex({loaderData}: Route.ComponentProps) {
+  const {collections} = loaderData;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
