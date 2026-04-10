@@ -64,9 +64,17 @@ export default function ProductPage({loaderData}: Route.ComponentProps) {
       </Link>
 
       <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2">
-        {/* Image placeholder */}
-        <div className="flex aspect-square items-center justify-center rounded-lg bg-gray-100">
-          <span className="text-2xl font-semibold text-gray-400">{product.brand}</span>
+        {/* Product image */}
+        <div className="flex aspect-square items-center justify-center rounded-lg bg-gray-100 overflow-hidden">
+          {product.images[0] ? (
+            <img
+              src={product.images[0]}
+              alt={product.title}
+              className="h-full w-full object-contain p-6"
+            />
+          ) : (
+            <span className="text-2xl font-semibold text-gray-400">{product.brand}</span>
+          )}
         </div>
 
         {/* Details */}
