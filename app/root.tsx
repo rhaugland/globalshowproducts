@@ -36,9 +36,10 @@ export function links() {
   ];
 }
 
-export async function loader() {
+export async function loader({context}: {context: any}) {
   return {
     publicStoreDomain: 'globalshowproducts.com',
+    isShopifyConnected: !!context?.storefront,
   };
 }
 
