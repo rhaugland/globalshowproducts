@@ -1094,5 +1094,28 @@
     ],
     "tags": ["euro scooter", "scooters", "capri", "portable"],
     "available": true
+  },
+  {
+    "id": "prod-genoa-scooter",
+    "handle": "euro-scooter-genoa",
+    "title": "Euro Scooter GENOA — 3 Wheel Electric Mobility Scooter",
+    "description": "The Euro Scooter GENOA is a premium 3-wheel electric mobility scooter built for comfort and stability. Features a padded adjustable seat with backrest, front basket for storage, heavy-duty diamond plate deck, all-terrain tires, and LED headlight with digital dashboard. Foldable handlebar for easy transport. Perfect for indoor and outdoor use with a range of up to 15 miles per charge.",
+    "brand": "Euro Scooter",
+    "collectionIds": ["col-scooters"],
+    "price": 4999.00,
+    "compareAtPrice": null,
+    "currency": "USD",
+    "images": ["/images/euroscooter-genoa.webp"],
+    "variants": [
+      {
+        "id": "var-genoa-scooter-white",
+        "title": "White / Silver",
+        "price": 4999.00,
+        "selectedOptions": [{ "name": "Color", "value": "White / Silver" }],
+        "available": true
+      }
+    ],
+    "tags": ["euro scooter", "scooters", "genoa", "mobility", "electric", "3-wheel"],
+    "available": true
   }
 ]

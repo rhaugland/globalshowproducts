@@ -19,8 +19,16 @@ export function CollectionCard({collection}: {collection: Collection}) {
       to={`/collections/${collection.handle}`}
       className="group block overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all hover:shadow-lg hover:scale-[1.02]"
     >
-      <div className={`flex aspect-[16/9] items-center justify-center ${style.bg}`}>
-        <span className="text-6xl transition-transform group-hover:scale-110">{style.emoji}</span>
+      <div className={`flex aspect-[16/9] items-center justify-center overflow-hidden ${style.bg}`}>
+        {collection.image && !collection.image.includes('placeholder') ? (
+          <img
+            src={collection.image}
+            alt={collection.title}
+            className="h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <span className="text-6xl transition-transform group-hover:scale-110">{style.emoji}</span>
+        )}
       </div>
       <div className="p-5">
         <h3 className={`text-lg font-bold ${style.accent}`}>{collection.title}</h3>
