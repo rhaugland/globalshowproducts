@@ -1,27 +1,21 @@
-import {useState, useEffect, useRef} from 'react';
+import {useState, useRef} from 'react';
 import {useSearchParams} from 'react-router';
-import {searchProducts} from '~/lib/mock-storefront';
-import type {Product} from '~/lib/mock-storefront';
+import {searchProducts} from '~/lib/storefront';
 import {ProductGrid} from '~/components/ProductGrid';
+import type {Route} from './+types/search';
 
-export default function SearchPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('q') ?? '';
+export async function loader({request, context}: Route.LoaderArgs) {
+  const url = new URL(request.url);
+  const query = url.searchParams.get('q') || '';
+  const results = query ? await searchProducts(query, context.storefront) : [];
+  return {query, results};
+}
+
+export default function SearchPage({loaderData}: Route.ComponentProps) {
+  const {query, results} = loaderData;
+  const [, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(query);
-  const [results, setResults] = useState<Product[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  useEffect(() => {
-    if (query) {
-      setResults(searchProducts(query));
-    } else {
-      setResults([]);
-    }
-  }, [query]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
