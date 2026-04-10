@@ -11,8 +11,12 @@ export function CartLineItem({item, onUpdateQuantity, onRemove}: CartLineItemPro
   return (
     <div className="flex items-start gap-4 border-b border-gray-200 py-6">
       {/* Image placeholder */}
-      <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100">
-        <span className="text-xs text-gray-400">Image</span>
+      <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 overflow-hidden">
+        {item.image ? (
+          <img src={item.image} alt={item.title} className="h-full w-full object-contain p-1" />
+        ) : (
+          <span className="text-xs text-gray-400">Image</span>
+        )}
       </div>
 
       {/* Details */}

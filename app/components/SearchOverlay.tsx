@@ -140,10 +140,14 @@ export function SearchOverlay({
                 className="flex items-center gap-4 rounded-lg p-3 transition hover:bg-gray-50"
               >
                 {/* Product image */}
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100">
-                  <span className="text-[10px] font-semibold text-gray-400">
-                    {product.brand}
-                  </span>
+                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 overflow-hidden">
+                  {product.images[0] ? (
+                    <img src={product.images[0]} alt={product.title} className="h-full w-full object-contain p-1" />
+                  ) : (
+                    <span className="text-[10px] font-semibold text-gray-400">
+                      {product.brand}
+                    </span>
+                  )}
                 </div>
 
                 {/* Product info */}

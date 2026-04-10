@@ -78,8 +78,12 @@ export function SaleCarousel({products}: {products: Product[]}) {
                 style={{scrollSnapAlign: 'start'}}
               >
                 {/* Image placeholder */}
-                <div className="relative flex aspect-square items-center justify-center bg-gray-50">
-                  <span className="text-xs font-semibold text-brand-gray-light">{product.brand}</span>
+                <div className="relative flex aspect-square items-center justify-center bg-gray-50 overflow-hidden">
+                  {product.images[0] ? (
+                    <img src={product.images[0]} alt={product.title} className="h-full w-full object-contain p-3" />
+                  ) : (
+                    <span className="text-xs font-semibold text-brand-gray-light">{product.brand}</span>
+                  )}
                   <span className="absolute left-2 top-2 rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-bold text-white">
                     Sale!
                   </span>

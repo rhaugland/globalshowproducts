@@ -131,8 +131,12 @@ export function CartDrawer({
               {items.map((item) => (
                 <div key={item.variantId} className="flex gap-3 border-b border-gray-100 py-4 first:pt-0 last:border-0">
                   {/* Product image placeholder */}
-                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gray-50 border border-gray-200">
-                    <span className="text-[8px] font-semibold text-gray-400">IMG</span>
+                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-lg bg-gray-50 border border-gray-200 overflow-hidden">
+                    {item.image ? (
+                      <img src={item.image} alt={item.title} className="h-full w-full object-contain p-1" />
+                    ) : (
+                      <span className="text-[8px] font-semibold text-gray-400">IMG</span>
+                    )}
                   </div>
 
                   {/* Info */}
@@ -211,8 +215,12 @@ export function CartDrawer({
                       key={product.id}
                       className="flex items-center gap-3 rounded-lg p-2 transition hover:bg-gray-50"
                     >
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded bg-gray-100">
-                        <span className="text-[8px] font-semibold text-gray-400">{product.brand}</span>
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded bg-gray-100 overflow-hidden">
+                        {product.images[0] ? (
+                          <img src={product.images[0]} alt={product.title} className="h-full w-full object-contain p-0.5" />
+                        ) : (
+                          <span className="text-[8px] font-semibold text-gray-400">{product.brand}</span>
+                        )}
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-xs font-semibold text-brand-gray">{product.title}</p>

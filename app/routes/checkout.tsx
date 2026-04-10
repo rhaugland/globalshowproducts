@@ -331,8 +331,12 @@ export default function CheckoutPage({loaderData}: Route.ComponentProps) {
               <div className="mt-4 space-y-3">
                 {cart.map((item) => (
                   <div key={item.variantId} className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-white border border-gray-200">
-                      <span className="text-[8px] font-semibold text-gray-400">IMG</span>
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-white border border-gray-200 overflow-hidden">
+                      {item.image ? (
+                        <img src={item.image} alt={item.title} className="h-full w-full object-contain p-0.5" />
+                      ) : (
+                        <span className="text-[8px] font-semibold text-gray-400">IMG</span>
+                      )}
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-brand-gray">{item.title}</p>
@@ -422,8 +426,12 @@ export default function CheckoutPage({loaderData}: Route.ComponentProps) {
               <div className="mt-4 space-y-3">
                 {confirmedItemsRef.current.map((item) => (
                   <div key={item.variantId} className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gray-50 border border-gray-200">
-                      <span className="text-[8px] font-semibold text-gray-400">IMG</span>
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-gray-50 border border-gray-200 overflow-hidden">
+                      {item.image ? (
+                        <img src={item.image} alt={item.title} className="h-full w-full object-contain p-0.5" />
+                      ) : (
+                        <span className="text-[8px] font-semibold text-gray-400">IMG</span>
+                      )}
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-brand-gray">{item.title}</p>
