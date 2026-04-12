@@ -10,8 +10,10 @@ import {
   getEventTypeLabel,
   getEventTypeColor,
   formatEventDate,
+  getAttendeesByEvent,
   type AdminVideo,
   type AdminEvent,
+  type EventAttendee,
 } from '../lib/admin-data';
 
 /* ─── Login form ─── */
@@ -86,6 +88,12 @@ function EventsManager() {
   useEffect(() => {
     setEvents(getEvents());
   }, []);
+
+  const [expandedAttendees, setExpandedAttendees] = useState<Record<string, boolean>>({});
+
+  function toggleAttendees(eventId: string) {
+    setExpandedAttendees((prev) => ({...prev, [eventId]: !prev[eventId]}));
+  }
 
   function resetForm() {
     setForm({
@@ -287,21 +295,64 @@ function EventsManager() {
       <div className="mt-4 space-y-2">
         {events.map((event) => {
           const typeColor = getEventTypeColor(event.eventType);
+          const attendees = getAttendeesByEvent(event.id);
+          const isExpanded = expandedAttendees[event.id] ?? false;
           return (
-            <div key={event.id} className="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3">
-              <div className="flex items-center gap-3">
-                <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${typeColor.bg} ${typeColor.text}`}>
-                  {getEventTypeLabel(event.eventType)}
-                </span>
-                <div>
-                  <p className="text-sm font-bold text-brand-gray">{event.name}</p>
-                  <p className="text-xs text-gray-500">{formatEventDate(event.date, event.endDate)} — {event.location}</p>
+            <div key={event.id} className="rounded-lg border border-gray-200">
+              <div className="flex items-center justify-between px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${typeColor.bg} ${typeColor.text}`}>
+                    {getEventTypeLabel(event.eventType)}
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold text-brand-gray">{event.name}</p>
+                    <p className="text-xs text-gray-500">{formatEventDate(event.date, event.endDate)} — {event.location}</p>
+                    <button
+                      onClick={() => toggleAttendees(event.id)}
+                      className="mt-0.5 flex items-center gap-1 text-xs text-gray-400 hover:text-brand-gray transition"
+                    >
+                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      {attendees.length > 0 ? `${attendees.length} attendee${attendees.length !== 1 ? 's' : ''}` : 'No registrations yet'}
+                      <svg className={`h-3 w-3 transition ${isExpanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={() => openEdit(event)} className="text-xs font-semibold text-brand-red hover:underline">Edit</button>
+                  <button onClick={() => handleDelete(event.id)} className="text-xs font-semibold text-red-500 hover:underline">Delete</button>
                 </div>
               </div>
-              <div className="flex gap-2">
-                <button onClick={() => openEdit(event)} className="text-xs font-semibold text-brand-red hover:underline">Edit</button>
-                <button onClick={() => handleDelete(event.id)} className="text-xs font-semibold text-red-500 hover:underline">Delete</button>
-              </div>
+
+              {isExpanded && (
+                <div className="border-t border-gray-100 bg-gray-50 px-4 py-3">
+                  {attendees.length === 0 ? (
+                    <p className="text-center text-sm italic text-gray-400">No registrations yet</p>
+                  ) : (
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="text-left text-xs font-semibold uppercase text-gray-400">
+                          <th className="pb-2">Name</th>
+                          <th className="pb-2">Email</th>
+                          <th className="pb-2">Company</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {attendees.map((att) => (
+                          <tr key={att.id} className="border-t border-gray-100">
+                            <td className="py-1.5 text-brand-gray">{att.name}</td>
+                            <td className="py-1.5 text-gray-600">{att.email}</td>
+                            <td className="py-1.5 text-gray-600">{att.company}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}
