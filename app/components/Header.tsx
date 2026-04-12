@@ -33,6 +33,7 @@ const navItems = [
     children: [
       {label: 'Upcoming Events', to: '/events'},
       {label: 'Videos', to: '/videos'},
+      {label: 'Admin', to: '/admin'},
     ],
   },
   {label: 'Contact Us', to: '/contact'},
