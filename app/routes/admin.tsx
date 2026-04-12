@@ -7,6 +7,9 @@ import {
   saveVideos,
   getEvents,
   saveEvents,
+  getEventTypeLabel,
+  getEventTypeColor,
+  formatEventDate,
   type AdminVideo,
   type AdminEvent,
 } from '../lib/admin-data';
@@ -67,42 +70,87 @@ function LoginForm({onLogin}: {onLogin: () => void}) {
 function EventsManager() {
   const [events, setEvents] = useState<AdminEvent[]>([]);
   const [editing, setEditing] = useState<AdminEvent | null>(null);
-  const [form, setForm] = useState({name: '', date: '', location: '', description: ''});
+  const [form, setForm] = useState({
+    name: '',
+    date: '',
+    endDate: '',
+    startTime: '',
+    endTime: '',
+    location: '',
+    description: '',
+    imageUrl: '',
+    registrationUrl: '',
+    eventType: 'trade-show' as AdminEvent['eventType'],
+  });
 
   useEffect(() => {
     setEvents(getEvents());
   }, []);
 
-  function openNew() {
+  function resetForm() {
+    setForm({
+      name: '',
+      date: '',
+      endDate: '',
+      startTime: '',
+      endTime: '',
+      location: '',
+      description: '',
+      imageUrl: '',
+      registrationUrl: '',
+      eventType: 'trade-show',
+    });
     setEditing(null);
-    setForm({name: '', date: '', location: '', description: ''});
+  }
+
+  function openNew() {
+    resetForm();
   }
 
   function openEdit(event: AdminEvent) {
     setEditing(event);
-    setForm({name: event.name, date: event.date, location: event.location, description: event.description});
+    setForm({
+      name: event.name,
+      date: event.date,
+      endDate: event.endDate ?? '',
+      startTime: event.startTime ?? '',
+      endTime: event.endTime ?? '',
+      location: event.location,
+      description: event.description,
+      imageUrl: event.imageUrl ?? '',
+      registrationUrl: event.registrationUrl ?? '',
+      eventType: event.eventType,
+    });
   }
 
   function handleSave(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name.trim() || !form.date.trim()) return;
 
+    const eventData = {
+      name: form.name,
+      date: form.date,
+      endDate: form.endDate || undefined,
+      startTime: form.startTime || undefined,
+      endTime: form.endTime || undefined,
+      location: form.location,
+      description: form.description,
+      imageUrl: form.imageUrl || undefined,
+      registrationUrl: form.registrationUrl || undefined,
+      eventType: form.eventType,
+    };
+
     let updated: AdminEvent[];
     if (editing) {
       updated = events.map((ev) =>
-        ev.id === editing.id ? {...ev, ...form} : ev,
+        ev.id === editing.id ? {...ev, ...eventData} : ev,
       );
     } else {
-      const newEvent: AdminEvent = {
-        id: `e_${Date.now()}`,
-        ...form,
-      };
-      updated = [...events, newEvent];
+      updated = [...events, {id: `e_${Date.now()}`, ...eventData}];
     }
     setEvents(updated);
     saveEvents(updated);
-    setForm({name: '', date: '', location: '', description: ''});
-    setEditing(null);
+    resetForm();
   }
 
   function handleDelete(id: string) {
@@ -124,9 +172,10 @@ function EventsManager() {
       </div>
 
       {/* Form */}
-      {(editing !== null || form.name !== '' || form.date !== '' || form.location !== '' || form.description !== '') ? null : null}
       <form onSubmit={handleSave} className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-3">
         <p className="text-sm font-semibold text-brand-gray">{editing ? 'Edit Event' : 'New Event'}</p>
+
+        {/* Row 1: Name + Type */}
         <div className="grid gap-3 sm:grid-cols-2">
           <input
             placeholder="Event Name *"
@@ -135,20 +184,68 @@ function EventsManager() {
             className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
             required
           />
-          <input
-            placeholder="Date (e.g. June 22–25, 2026) *"
-            value={form.date}
-            onChange={(e) => setForm({...form, date: e.target.value})}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
-            required
-          />
+          <select
+            value={form.eventType}
+            onChange={(e) => setForm({...form, eventType: e.target.value as AdminEvent['eventType']})}
+            className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+          >
+            <option value="trade-show">Trade Show</option>
+            <option value="workshop">Workshop</option>
+            <option value="webinar">Webinar</option>
+            <option value="other">Other</option>
+          </select>
         </div>
+
+        {/* Row 2: Dates + Times */}
+        <div className="grid gap-3 sm:grid-cols-4">
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500">Start Date *</label>
+            <input
+              type="date"
+              value={form.date}
+              onChange={(e) => setForm({...form, date: e.target.value})}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+              required
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500">End Date</label>
+            <input
+              type="date"
+              value={form.endDate}
+              onChange={(e) => setForm({...form, endDate: e.target.value})}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500">Start Time</label>
+            <input
+              type="time"
+              value={form.startTime}
+              onChange={(e) => setForm({...form, startTime: e.target.value})}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500">End Time</label>
+            <input
+              type="time"
+              value={form.endTime}
+              onChange={(e) => setForm({...form, endTime: e.target.value})}
+              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+            />
+          </div>
+        </div>
+
+        {/* Row 3: Location */}
         <input
           placeholder="Location"
           value={form.location}
           onChange={(e) => setForm({...form, location: e.target.value})}
           className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
         />
+
+        {/* Row 4: Description */}
         <textarea
           placeholder="Description"
           value={form.description}
@@ -156,12 +253,30 @@ function EventsManager() {
           rows={2}
           className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
         />
+
+        {/* Row 5: URLs */}
+        <div className="grid gap-3 sm:grid-cols-2">
+          <input
+            placeholder="Image URL (optional)"
+            value={form.imageUrl}
+            onChange={(e) => setForm({...form, imageUrl: e.target.value})}
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+          />
+          <input
+            placeholder="Registration URL (optional)"
+            value={form.registrationUrl}
+            onChange={(e) => setForm({...form, registrationUrl: e.target.value})}
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+          />
+        </div>
+
+        {/* Actions */}
         <div className="flex gap-2">
           <button type="submit" className="rounded-lg bg-brand-red px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-red-dark">
             {editing ? 'Update' : 'Add'}
           </button>
           {editing && (
-            <button type="button" onClick={() => { setEditing(null); setForm({name: '', date: '', location: '', description: ''}); }} className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100">
+            <button type="button" onClick={resetForm} className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100">
               Cancel
             </button>
           )}
@@ -170,18 +285,26 @@ function EventsManager() {
 
       {/* List */}
       <div className="mt-4 space-y-2">
-        {events.map((event) => (
-          <div key={event.id} className="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3">
-            <div>
-              <p className="text-sm font-bold text-brand-gray">{event.name}</p>
-              <p className="text-xs text-gray-500">{event.date} — {event.location}</p>
+        {events.map((event) => {
+          const typeColor = getEventTypeColor(event.eventType);
+          return (
+            <div key={event.id} className="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3">
+              <div className="flex items-center gap-3">
+                <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${typeColor.bg} ${typeColor.text}`}>
+                  {getEventTypeLabel(event.eventType)}
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-brand-gray">{event.name}</p>
+                  <p className="text-xs text-gray-500">{formatEventDate(event.date, event.endDate)} — {event.location}</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => openEdit(event)} className="text-xs font-semibold text-brand-red hover:underline">Edit</button>
+                <button onClick={() => handleDelete(event.id)} className="text-xs font-semibold text-red-500 hover:underline">Delete</button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button onClick={() => openEdit(event)} className="text-xs font-semibold text-brand-red hover:underline">Edit</button>
-              <button onClick={() => handleDelete(event.id)} className="text-xs font-semibold text-red-500 hover:underline">Delete</button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
