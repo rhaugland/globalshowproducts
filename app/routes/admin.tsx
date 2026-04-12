@@ -518,6 +518,7 @@ function ContactsManager() {
   const [events, setEvents] = useState<AdminEvent[]>([]);
   const [attendees, setAttendees] = useState<EventAttendee[]>([]);
   const [search, setSearch] = useState('');
+  const [contactTypeFilter, setContactTypeFilter] = useState<EventType | 'all'>('all');
 
   useEffect(() => {
     setEvents(getEvents());
@@ -569,13 +570,17 @@ function ContactsManager() {
     return Array.from(map.values()).sort((a, b) => b.lastRegistered.localeCompare(a.lastRegistered));
   }, [attendees, eventsById]);
 
-  const filtered = search.trim()
-    ? contacts.filter((c) =>
-        c.name.toLowerCase().includes(search.toLowerCase()) ||
-        c.email.toLowerCase().includes(search.toLowerCase()) ||
-        c.company.toLowerCase().includes(search.toLowerCase()),
-      )
-    : contacts;
+  const filtered = contacts.filter((c) => {
+    if (contactTypeFilter !== 'all') {
+      const label = getEventTypeLabel(contactTypeFilter);
+      if (!c.eventTypes.has(label)) return false;
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      if (!c.name.toLowerCase().includes(q) && !c.email.toLowerCase().includes(q) && !c.company.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
 
   return (
     <div>
@@ -592,9 +597,33 @@ function ContactsManager() {
         />
       </div>
 
+      {/* Type Filter */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        {(['all', 'trade-show', 'workshop', 'webinar', 'other'] as const).map((type) => {
+          const isActive = contactTypeFilter === type;
+          const label = type === 'all' ? 'All' : getEventTypeLabel(type);
+          const color = type === 'all' ? null : getEventTypeColor(type);
+          return (
+            <button
+              key={type}
+              onClick={() => setContactTypeFilter(type)}
+              className={`rounded-full px-3 py-1 text-xs font-bold transition ${
+                isActive
+                  ? type === 'all'
+                    ? 'bg-brand-gray text-white'
+                    : `${color!.bg} ${color!.text} ring-1 ring-current`
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              }`}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+
       {filtered.length === 0 ? (
         <p className="mt-8 text-center text-sm italic text-gray-400">
-          {search ? 'No contacts match your search.' : 'No contacts yet. Attendees will appear here when they register for events.'}
+          {search || contactTypeFilter !== 'all' ? 'No contacts match your filters.' : 'No contacts yet. Attendees will appear here when they register for events.'}
         </p>
       ) : (
         <div className="mt-4 overflow-x-auto">
