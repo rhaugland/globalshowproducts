@@ -17,6 +17,7 @@ import {
   type EventAttendee,
   type EventType,
 } from '../lib/admin-data';
+import {ProductsManager} from '../components/admin/ProductsManager';
 
 /* ─── Login form ─── */
 function LoginForm({onLogin}: {onLogin: () => void}) {
@@ -720,28 +721,31 @@ function ContactsManager() {
 /* ─── Admin Page ─── */
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [tab, setTab] = useState<'events' | 'videos' | 'contacts'>('events');
+  const [tab, setTab] = useState<'events' | 'videos' | 'contacts' | 'products'>('events');
   const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
+  const [storeDropdownOpen, setStoreDropdownOpen] = useState(false);
 
   useEffect(() => {
     setLoggedIn(isAdminLoggedIn());
   }, []);
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
-    if (!eventsDropdownOpen) return;
+    if (!eventsDropdownOpen && !storeDropdownOpen) return;
     function handleClick() {
       setEventsDropdownOpen(false);
+      setStoreDropdownOpen(false);
     }
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
-  }, [eventsDropdownOpen]);
+  }, [eventsDropdownOpen, storeDropdownOpen]);
 
   if (!loggedIn) {
     return <LoginForm onLogin={() => setLoggedIn(true)} />;
   }
 
   const isEventsSection = tab === 'events' || tab === 'contacts';
+  const isStoreSection = tab === 'products';
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
@@ -799,6 +803,37 @@ export default function AdminPage() {
             </div>
           )}
         </div>
+        {/* Store dropdown tab */}
+        <div className="relative">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setStoreDropdownOpen(!storeDropdownOpen);
+            }}
+            className={`flex items-center gap-1 px-4 py-2 text-sm font-semibold transition ${
+              isStoreSection
+                ? 'border-b-2 border-brand-red text-brand-red'
+                : 'text-gray-500 hover:text-brand-gray'
+            }`}
+          >
+            {tab === 'products' ? 'Products' : 'Store'}
+            <svg className={`h-3.5 w-3.5 transition-transform ${storeDropdownOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {storeDropdownOpen && (
+            <div className="absolute left-0 top-full z-10 mt-1 w-40 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+              <button
+                onClick={() => { setTab('products'); setStoreDropdownOpen(false); }}
+                className={`block w-full px-4 py-2 text-left text-sm transition ${
+                  tab === 'products' ? 'bg-gray-50 font-semibold text-brand-red' : 'text-gray-600 hover:bg-gray-50'
+                }`}
+              >
+                Products
+              </button>
+            </div>
+          )}
+        </div>
         <button
           onClick={() => setTab('videos')}
           className={`px-4 py-2 text-sm font-semibold transition ${
@@ -815,6 +850,7 @@ export default function AdminPage() {
         {tab === 'events' && <EventsManager />}
         {tab === 'videos' && <VideosManager />}
         {tab === 'contacts' && <ContactsManager />}
+        {tab === 'products' && <ProductsManager />}
       </div>
     </div>
   );
