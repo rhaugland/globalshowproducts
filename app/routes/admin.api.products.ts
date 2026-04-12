@@ -8,6 +8,7 @@ import {
   getCollections,
   getProductCollections,
   setProductCollections,
+  refreshAccessToken,
   type ProductFormData,
 } from '~/lib/shopify-admin';
 // ---------------------------------------------------------------------------
@@ -22,10 +23,23 @@ function requireAuth(request: Request) {
   }
 }
 
-function getCredentials(context: Route.LoaderArgs['context']) {
+async function getCredentials(context: Route.LoaderArgs['context']) {
   const storeDomain = context.env.PUBLIC_STORE_DOMAIN;
+  if (!storeDomain) {
+    throw new Response('Shopify Admin API not configured', {status: 503});
+  }
+
+  // Prefer auto-refreshed token via client credentials (survives 24h expiry)
+  const clientId = context.env.SHOPIFY_CLIENT_ID;
+  const clientSecret = context.env.SHOPIFY_CLIENT_SECRET;
+  if (clientId && clientSecret) {
+    const token = await refreshAccessToken(storeDomain, clientId, clientSecret);
+    return {storeDomain, token};
+  }
+
+  // Fall back to static env token
   const token = context.env.SHOPIFY_ADMIN_API_TOKEN;
-  if (!storeDomain || !token) {
+  if (!token) {
     throw new Response('Shopify Admin API not configured', {status: 503});
   }
   return {storeDomain, token};
@@ -37,7 +51,7 @@ function getCredentials(context: Route.LoaderArgs['context']) {
 
 export async function loader({request, context}: Route.LoaderArgs) {
   requireAuth(request);
-  const {storeDomain, token} = getCredentials(context);
+  const {storeDomain, token} = await getCredentials(context);
   const url = new URL(request.url);
 
   try {
@@ -72,7 +86,7 @@ export async function loader({request, context}: Route.LoaderArgs) {
 
 export async function action({request, context}: Route.ActionArgs) {
   requireAuth(request);
-  const {storeDomain, token} = getCredentials(context);
+  const {storeDomain, token} = await getCredentials(context);
 
   let body: {
     intent: string;

@@ -559,11 +559,16 @@ function VideosManager() {
 }
 
 /* ─── Contacts Manager ─── */
+type ContactSortField = 'name' | 'company' | 'eventsCount' | 'lastRegistered';
+type SortDir = 'asc' | 'desc';
+
 function ContactsManager() {
   const [events, setEvents] = useState<AdminEvent[]>([]);
   const [attendees, setAttendees] = useState<EventAttendee[]>([]);
   const [search, setSearch] = useState('');
   const [contactTypeFilter, setContactTypeFilter] = useState<EventType | 'all'>('all');
+  const [sortField, setSortField] = useState<ContactSortField>('lastRegistered');
+  const [sortDir, setSortDir] = useState<SortDir>('desc');
 
   useEffect(() => {
     setEvents(getEvents());
@@ -612,20 +617,40 @@ function ContactsManager() {
       }
     }
 
-    return Array.from(map.values()).sort((a, b) => b.lastRegistered.localeCompare(a.lastRegistered));
+    return Array.from(map.values());
   }, [attendees, eventsById]);
 
-  const filtered = contacts.filter((c) => {
-    if (contactTypeFilter !== 'all') {
-      const label = getEventTypeLabel(contactTypeFilter);
-      if (!c.eventTypes.has(label)) return false;
+  const toggleSort = (field: ContactSortField) => {
+    if (sortField === field) {
+      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortField(field);
+      setSortDir(field === 'lastRegistered' ? 'desc' : 'asc');
     }
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      if (!c.name.toLowerCase().includes(q) && !c.email.toLowerCase().includes(q) && !c.company.toLowerCase().includes(q)) return false;
-    }
-    return true;
-  });
+  };
+
+  const filtered = contacts
+    .filter((c) => {
+      if (contactTypeFilter !== 'all') {
+        const label = getEventTypeLabel(contactTypeFilter);
+        if (!c.eventTypes.has(label)) return false;
+      }
+      if (search.trim()) {
+        const q = search.toLowerCase();
+        if (!c.name.toLowerCase().includes(q) && !c.email.toLowerCase().includes(q) && !c.company.toLowerCase().includes(q)) return false;
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      const dir = sortDir === 'asc' ? 1 : -1;
+      switch (sortField) {
+        case 'name': return dir * a.name.localeCompare(b.name);
+        case 'company': return dir * a.company.localeCompare(b.company);
+        case 'eventsCount': return dir * (a.eventNames.length - b.eventNames.length);
+        case 'lastRegistered': return dir * a.lastRegistered.localeCompare(b.lastRegistered);
+        default: return 0;
+      }
+    });
 
   return (
     <div>
@@ -675,12 +700,25 @@ function ContactsManager() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-xs font-semibold uppercase text-gray-400 border-b border-gray-200">
-                <th className="pb-3 pr-4">Name</th>
-                <th className="pb-3 pr-4">Email</th>
-                <th className="pb-3 pr-4">Company</th>
-                <th className="pb-3 pr-4">Event Types</th>
-                <th className="pb-3 pr-4">Events Registered</th>
-                <th className="pb-3">Last Registered</th>
+                {([
+                  ['name', 'Name'],
+                  [null, 'Email'],
+                  ['company', 'Company'],
+                  [null, 'Event Types'],
+                  ['eventsCount', 'Events Registered'],
+                  ['lastRegistered', 'Last Registered'],
+                ] as const).map(([field, label], i) => (
+                  <th
+                    key={label}
+                    className={`pb-3 ${i < 5 ? 'pr-4' : ''} ${field ? 'cursor-pointer select-none hover:text-gray-600' : ''}`}
+                    onClick={field ? () => toggleSort(field as ContactSortField) : undefined}
+                  >
+                    {label}
+                    {field && sortField === field && (
+                      <span className="ml-1 text-brand-red">{sortDir === 'asc' ? '▲' : '▼'}</span>
+                    )}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>

@@ -7,6 +7,55 @@
 const API_VERSION = '2024-01';
 
 // ---------------------------------------------------------------------------
+// Token refresh (OAuth client_credentials)
+// ---------------------------------------------------------------------------
+
+/** In-memory cache for the refreshed token. Persists per worker/process instance. */
+let cachedToken: {value: string; expiresAt: number} | null = null;
+
+/**
+ * Fetch a fresh Admin API access token using the OAuth client_credentials grant.
+ * Returns a short-lived token (~24h). Caches in memory to avoid re-fetching on
+ * every request.
+ */
+export async function refreshAccessToken(
+  storeDomain: string,
+  clientId: string,
+  clientSecret: string,
+): Promise<string> {
+  // Return cached token if still valid (with 5-min buffer)
+  if (cachedToken && Date.now() < cachedToken.expiresAt - 5 * 60 * 1000) {
+    return cachedToken.value;
+  }
+
+  const res = await fetch(
+    `https://${storeDomain}/admin/oauth/access_token`,
+    {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: clientId,
+        client_secret: clientSecret,
+      }),
+    },
+  );
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`Token refresh failed (${res.status}): ${text}`);
+  }
+
+  const data = (await res.json()) as {access_token: string; expires_in?: number};
+  const expiresIn = data.expires_in ?? 86400; // default 24h
+  cachedToken = {
+    value: data.access_token,
+    expiresAt: Date.now() + expiresIn * 1000,
+  };
+  return cachedToken.value;
+}
+
+// ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 

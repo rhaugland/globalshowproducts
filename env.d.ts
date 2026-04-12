@@ -16,4 +16,6 @@ interface Env {
   PUBLIC_CHECKOUT_DOMAIN: string;
   SHOP_ID: string;
   SHOPIFY_ADMIN_API_TOKEN: string;
+  SHOPIFY_CLIENT_ID: string;
+  SHOPIFY_CLIENT_SECRET: string;
 }
