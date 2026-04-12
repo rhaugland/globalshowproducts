@@ -192,7 +192,7 @@ export async function updateProduct(
   return data.product;
 }
 
-/** Sets a product's status to 'draft' (Shopify's equivalent of archiving). */
+/** Sets a product's status to 'draft', hiding it from the storefront. */
 export async function archiveProduct(
   storeDomain: string,
   token: string,
@@ -250,7 +250,7 @@ export async function getProductCollections(
   const data = await shopifyAdminFetch<{collects: Collect[]}>(
     storeDomain,
     token,
-    `/collects.json?product_id=${productId}`,
+    `/collects.json?product_id=${productId}&limit=250`,
   );
   return data.collects.map((c) => c.collection_id);
 }
@@ -271,7 +271,7 @@ export async function setProductCollections(
   const currentData = await shopifyAdminFetch<{collects: Collect[]}>(
     storeDomain,
     token,
-    `/collects.json?product_id=${productId}`,
+    `/collects.json?product_id=${productId}&limit=250`,
   );
   const currentCollects = currentData.collects;
 
