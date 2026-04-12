@@ -85,9 +85,8 @@ export default async function handleRequest(
   }
 
   responseHeaders.set('Content-Type', 'text/html');
-  const url = new URL(request.url);
-  const isLocalhost = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
-  if (isLocalhost) {
+  // Skip CSP in dev — nonce blocks React Router's inline scripts
+  if (process.env.NODE_ENV === 'production') {
     responseHeaders.set('Content-Security-Policy', header);
   }
 

@@ -391,14 +391,36 @@ function EventsManager() {
 }
 
 /* ─── Videos Manager ─── */
+const YOUTUBE_API_KEY = 'AIzaSyA4hEblA12LxovrxOa25VR-cFQ8pc2RgiU';
+
 function VideosManager() {
   const [videos, setVideos] = useState<AdminVideo[]>([]);
   const [editing, setEditing] = useState<AdminVideo | null>(null);
   const [form, setForm] = useState({title: '', youtubeId: ''});
+  const [stats, setStats] = useState<Record<string, {views: string; likes: string}>>({});
 
   useEffect(() => {
     setVideos(getVideos());
   }, []);
+
+  // Fetch YouTube stats for all videos
+  useEffect(() => {
+    if (videos.length === 0) return;
+    const ids = videos.map((v) => v.youtubeId).join(',');
+    fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids}&key=${YOUTUBE_API_KEY}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const map: Record<string, {views: string; likes: string}> = {};
+        for (const item of data.items || []) {
+          map[item.id] = {
+            views: Number(item.statistics.viewCount).toLocaleString(),
+            likes: Number(item.statistics.likeCount).toLocaleString(),
+          };
+        }
+        setStats(map);
+      })
+      .catch(() => {});
+  }, [videos]);
 
   function extractYoutubeId(input: string): string {
     // Accept full YouTube URLs or just the ID
@@ -495,19 +517,41 @@ function VideosManager() {
 
       {/* List */}
       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-        {videos.map((video) => (
-          <div key={video.id} className="flex items-center gap-3 rounded-lg border border-gray-200 p-3">
-            <img src={video.thumbnail} alt={video.title} className="h-16 w-24 rounded object-cover flex-shrink-0" />
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-bold text-brand-gray">{video.title}</p>
-              <p className="text-xs text-gray-400">{video.youtubeId}</p>
+        {videos.map((video) => {
+          const videoStats = stats[video.youtubeId];
+          return (
+            <div key={video.id} className="rounded-lg border border-gray-200 p-3">
+              <div className="flex items-center gap-3">
+                <img src={video.thumbnail} alt={video.title} className="h-16 w-24 rounded object-cover flex-shrink-0" />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-bold text-brand-gray">{video.title}</p>
+                  <p className="text-xs text-gray-400">{video.youtubeId}</p>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <button onClick={() => openEdit(video)} className="text-xs font-semibold text-brand-red hover:underline">Edit</button>
+                  <button onClick={() => handleDelete(video.id)} className="text-xs font-semibold text-red-500 hover:underline">Delete</button>
+                </div>
+              </div>
+              {videoStats && (
+                <div className="mt-2 flex gap-4 border-t border-gray-100 pt-2">
+                  <span className="flex items-center gap-1 text-xs text-gray-500">
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    {videoStats.views} views
+                  </span>
+                  <span className="flex items-center gap-1 text-xs text-gray-500">
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                    </svg>
+                    {videoStats.likes} likes
+                  </span>
+                </div>
+              )}
             </div>
-            <div className="flex flex-col gap-1">
-              <button onClick={() => openEdit(video)} className="text-xs font-semibold text-brand-red hover:underline">Edit</button>
-              <button onClick={() => handleDelete(video.id)} className="text-xs font-semibold text-red-500 hover:underline">Delete</button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
