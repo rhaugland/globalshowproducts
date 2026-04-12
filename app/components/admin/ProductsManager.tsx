@@ -39,14 +39,14 @@ type ViewMode = 'list' | 'create' | 'edit';
 
 // ─── API Helpers ─────────────────────────────────────────────────────────────
 
-const AUTH_HEADERS = {'X-Admin-Auth': 'globalshowproducts'} as const;
+const AUTH_HEADERS = {...AUTH_HEADERS} as const;
 
 async function fetchProducts(): Promise<AdminProduct[]> {
   const res = await fetch('/admin/api/products', {
-    headers: {'X-Admin-Auth': 'globalshowproducts'},
+    headers: {...AUTH_HEADERS},
   });
   if (!res.ok) throw new Error(`Failed to fetch products: ${res.statusText}`);
-  const data = await res.json<{products: AdminProduct[]}>();
+  const data = await res.json() as Promise<{products: AdminProduct[]}>;
   return data.products;
 }
 
@@ -54,19 +54,19 @@ async function fetchProduct(
   id: number,
 ): Promise<{product: AdminProduct; collectionIds: number[]}> {
   const res = await fetch(`/admin/api/products?id=${id}`, {
-    headers: {'X-Admin-Auth': 'globalshowproducts'},
+    headers: {...AUTH_HEADERS},
   });
   if (!res.ok) throw new Error(`Failed to fetch product: ${res.statusText}`);
-  const data = await res.json<{product: AdminProduct; collectionIds: number[]}>();
+  const data = await res.json() as Promise<{product: AdminProduct; collectionIds: number[]}>;
   return data;
 }
 
 async function fetchCollections(): Promise<AdminCollection[]> {
   const res = await fetch('/admin/api/products?collections=1', {
-    headers: {'X-Admin-Auth': 'globalshowproducts'},
+    headers: {...AUTH_HEADERS},
   });
   if (!res.ok) throw new Error(`Failed to fetch collections: ${res.statusText}`);
-  const data = await res.json<{collections: AdminCollection[]}>();
+  const data = await res.json() as Promise<{collections: AdminCollection[]}>;
   return data.collections;
 }
 
@@ -80,11 +80,11 @@ async function saveProduct(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Admin-Auth': 'globalshowproducts',
+      ...AUTH_HEADERS,
     },
     body: JSON.stringify({intent, id, formData, collectionIds}),
   });
-  const data = await res.json<{product?: AdminProduct; error?: string}>();
+  const data = await res.json() as Promise<{product?: AdminProduct; error?: string}>;
   if (!res.ok || data.error) throw new Error(data.error ?? 'Save failed');
   return data.product!;
 }
@@ -94,11 +94,11 @@ async function archiveProductApi(id: number): Promise<void> {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Admin-Auth': 'globalshowproducts',
+      ...AUTH_HEADERS,
     },
     body: JSON.stringify({intent: 'archive', id}),
   });
-  const data = await res.json<{error?: string}>();
+  const data = await res.json() as Promise<{error?: string}>;
   if (!res.ok || data.error) throw new Error(data.error ?? 'Archive failed');
 }
 
@@ -767,7 +767,7 @@ function ProductForm({
 
 // ─── ProductsManager ──────────────────────────────────────────────────────────
 
-export default function ProductsManager() {
+export function ProductsManager() {
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [collections, setCollections] = useState<AdminCollection[]>([]);
   const [loading, setLoading] = useState(true);
@@ -919,7 +919,7 @@ export default function ProductsManager() {
                   product.status === 'active'
                     ? 'bg-green-100 text-green-700'
                     : product.status === 'draft'
-                    ? 'bg-yellow-100 text-yellow-700'
+                    ? 'bg-gray-100 text-gray-500'
                     : 'bg-gray-100 text-gray-500';
 
                 return (
