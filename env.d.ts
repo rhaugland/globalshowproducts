@@ -15,4 +15,5 @@ interface Env {
   PUBLIC_CUSTOMER_ACCOUNT_API_URL: string;
   PUBLIC_CHECKOUT_DOMAIN: string;
   SHOP_ID: string;
+  SHOPIFY_ADMIN_API_TOKEN: string;
 }
