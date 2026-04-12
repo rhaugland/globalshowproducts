@@ -84,6 +84,74 @@ const DEFAULT_EVENTS: AdminEvent[] = [
     description: "Get ahead on holiday inventory. We'll be showcasing our best-selling gift items and seasonal specials.",
     eventType: 'trade-show',
   },
+  {
+    id: 'e5',
+    name: 'Wholesale Product Sourcing 101',
+    date: '2026-05-08',
+    startTime: '14:00',
+    endTime: '15:30',
+    location: 'Online (Zoom)',
+    description: 'Free workshop for new retailers — learn how to evaluate wholesale suppliers, negotiate MOQs, and build a profitable product mix.',
+    registrationUrl: 'https://globalshowproducts.com/workshops/sourcing-101',
+    eventType: 'workshop',
+  },
+  {
+    id: 'e6',
+    name: 'Summer Toy Trends Webinar',
+    date: '2026-05-20',
+    startTime: '11:00',
+    endTime: '12:00',
+    location: 'Online (Zoom)',
+    description: "Join our product team as they break down the hottest toy categories for summer 2026 and share insights on what's flying off shelves.",
+    registrationUrl: 'https://globalshowproducts.com/webinars/toy-trends',
+    eventType: 'webinar',
+  },
+  {
+    id: 'e7',
+    name: 'Atlanta Merchandise Mart',
+    date: '2026-07-11',
+    endDate: '2026-07-14',
+    startTime: '09:00',
+    endTime: '18:00',
+    location: 'AmericasMart, Atlanta, GA',
+    description: 'Visit Booth 2247 to see our expanded home & garden line. Exclusive show pricing on bulk orders over $500.',
+    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
+    registrationUrl: 'https://globalshowproducts.com/atlanta-2026',
+    eventType: 'trade-show',
+  },
+  {
+    id: 'e8',
+    name: 'Retail Pricing Strategies Workshop',
+    date: '2026-07-30',
+    startTime: '13:00',
+    endTime: '15:00',
+    location: 'Online (Zoom)',
+    description: 'Hands-on workshop covering markup strategies, competitive pricing analysis, and how to maximize margins on wholesale goods.',
+    registrationUrl: 'https://globalshowproducts.com/workshops/pricing',
+    eventType: 'workshop',
+  },
+  {
+    id: 'e9',
+    name: 'Q3 New Product Launch Webinar',
+    date: '2026-08-28',
+    startTime: '10:00',
+    endTime: '11:00',
+    location: 'Online (Zoom)',
+    description: 'Get a first look at 15+ new products dropping in Q3 — scooters, outdoor toys, and kitchen gadgets. Pre-order available for attendees.',
+    registrationUrl: 'https://globalshowproducts.com/webinars/q3-launch',
+    eventType: 'webinar',
+  },
+  {
+    id: 'e10',
+    name: 'Global Show Products Open House',
+    date: '2026-11-07',
+    startTime: '10:00',
+    endTime: '16:00',
+    location: 'GSP Warehouse, Minneapolis, MN',
+    description: 'Tour our warehouse, meet the team, and shop clearance inventory at wholesale-below pricing. Lunch provided.',
+    imageUrl: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=600&q=80',
+    eventType: 'other',
+  },
 ];
 
 const STORAGE_KEYS = {
@@ -119,7 +187,7 @@ export function getEvents(): AdminEvent[] {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0 && !parsed[0].eventType) {
+      if (Array.isArray(parsed) && parsed.length > 0 && (!parsed[0].eventType || parsed.length <= 4)) {
         localStorage.removeItem(STORAGE_KEYS.events);
         return DEFAULT_EVENTS;
       }
