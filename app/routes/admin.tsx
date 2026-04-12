@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import {
   adminLogin,
   isAdminLoggedIn,
@@ -10,10 +10,12 @@ import {
   getEventTypeLabel,
   getEventTypeColor,
   formatEventDate,
+  getAttendees,
   getAttendeesByEvent,
   type AdminVideo,
   type AdminEvent,
   type EventAttendee,
+  type EventType,
 } from '../lib/admin-data';
 
 /* ─── Login form ─── */
@@ -90,6 +92,9 @@ function EventsManager() {
   }, []);
 
   const [expandedAttendees, setExpandedAttendees] = useState<Record<string, boolean>>({});
+  const [typeFilter, setTypeFilter] = useState<EventType | 'all'>('all');
+
+  const filteredEvents = typeFilter === 'all' ? events : events.filter((e) => e.eventType === typeFilter);
 
   function toggleAttendees(eventId: string) {
     setExpandedAttendees((prev) => ({...prev, [eventId]: !prev[eventId]}));
@@ -291,9 +296,33 @@ function EventsManager() {
         </div>
       </form>
 
+      {/* Type Filter */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        {(['all', 'trade-show', 'workshop', 'webinar', 'other'] as const).map((type) => {
+          const isActive = typeFilter === type;
+          const label = type === 'all' ? 'All' : getEventTypeLabel(type);
+          const color = type === 'all' ? null : getEventTypeColor(type);
+          return (
+            <button
+              key={type}
+              onClick={() => setTypeFilter(type)}
+              className={`rounded-full px-3 py-1 text-xs font-bold transition ${
+                isActive
+                  ? type === 'all'
+                    ? 'bg-brand-gray text-white'
+                    : `${color!.bg} ${color!.text} ring-1 ring-current`
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              }`}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* List */}
       <div className="mt-4 space-y-2">
-        {events.map((event) => {
+        {filteredEvents.map((event) => {
           const typeColor = getEventTypeColor(event.eventType);
           const attendees = getAttendeesByEvent(event.id);
           const isExpanded = expandedAttendees[event.id] ?? false;
@@ -484,10 +513,141 @@ function VideosManager() {
   );
 }
 
+/* ─── Contacts Manager ─── */
+function ContactsManager() {
+  const [events, setEvents] = useState<AdminEvent[]>([]);
+  const [attendees, setAttendees] = useState<EventAttendee[]>([]);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    setEvents(getEvents());
+    setAttendees(getAttendees());
+  }, []);
+
+  const eventsById = useMemo(() => {
+    const map = new Map<string, AdminEvent>();
+    for (const ev of events) map.set(ev.id, ev);
+    return map;
+  }, [events]);
+
+  // Deduplicate by email, aggregate event data
+  const contacts = useMemo(() => {
+    const map = new Map<string, {
+      name: string;
+      email: string;
+      company: string;
+      eventNames: string[];
+      eventTypes: Set<string>;
+      lastRegistered: string;
+    }>();
+
+    for (const att of attendees) {
+      const key = att.email.toLowerCase();
+      const ev = eventsById.get(att.eventId);
+      const eventName = ev?.name ?? 'Unknown Event';
+      const eventType = ev ? getEventTypeLabel(ev.eventType) : 'Unknown';
+
+      if (map.has(key)) {
+        const existing = map.get(key)!;
+        existing.eventNames.push(eventName);
+        existing.eventTypes.add(eventType);
+        if (att.registeredAt > existing.lastRegistered) {
+          existing.lastRegistered = att.registeredAt;
+        }
+      } else {
+        map.set(key, {
+          name: att.name,
+          email: att.email,
+          company: att.company,
+          eventNames: [eventName],
+          eventTypes: new Set([eventType]),
+          lastRegistered: att.registeredAt,
+        });
+      }
+    }
+
+    return Array.from(map.values()).sort((a, b) => b.lastRegistered.localeCompare(a.lastRegistered));
+  }, [attendees, eventsById]);
+
+  const filtered = search.trim()
+    ? contacts.filter((c) =>
+        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.email.toLowerCase().includes(search.toLowerCase()) ||
+        c.company.toLowerCase().includes(search.toLowerCase()),
+      )
+    : contacts;
+
+  return (
+    <div>
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-bold text-brand-gray">
+          Contacts
+          <span className="ml-2 text-sm font-normal text-gray-400">({contacts.length} total)</span>
+        </h2>
+        <input
+          placeholder="Search contacts..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-64 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+        />
+      </div>
+
+      {filtered.length === 0 ? (
+        <p className="mt-8 text-center text-sm italic text-gray-400">
+          {search ? 'No contacts match your search.' : 'No contacts yet. Attendees will appear here when they register for events.'}
+        </p>
+      ) : (
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-xs font-semibold uppercase text-gray-400 border-b border-gray-200">
+                <th className="pb-3 pr-4">Name</th>
+                <th className="pb-3 pr-4">Email</th>
+                <th className="pb-3 pr-4">Company</th>
+                <th className="pb-3 pr-4">Event Types</th>
+                <th className="pb-3 pr-4">Events Registered</th>
+                <th className="pb-3">Last Registered</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((contact) => (
+                <tr key={contact.email} className="border-t border-gray-100">
+                  <td className="py-2.5 pr-4 font-medium text-brand-gray">{contact.name}</td>
+                  <td className="py-2.5 pr-4 text-gray-600">{contact.email}</td>
+                  <td className="py-2.5 pr-4 text-gray-600">{contact.company}</td>
+                  <td className="py-2.5 pr-4">
+                    <div className="flex flex-wrap gap-1">
+                      {Array.from(contact.eventTypes).map((type) => (
+                        <span key={type} className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-600">
+                          {type}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="py-2.5 pr-4">
+                    <div className="flex flex-col gap-0.5">
+                      {contact.eventNames.map((name, i) => (
+                        <span key={i} className="text-xs text-gray-500">{name}</span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="py-2.5 text-xs text-gray-400">
+                    {new Date(contact.lastRegistered).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─── Admin Page ─── */
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [tab, setTab] = useState<'events' | 'videos'>('events');
+  const [tab, setTab] = useState<'events' | 'videos' | 'contacts'>('events');
 
   useEffect(() => {
     setLoggedIn(isAdminLoggedIn());
@@ -534,10 +694,22 @@ export default function AdminPage() {
         >
           Videos
         </button>
+        <button
+          onClick={() => setTab('contacts')}
+          className={`px-4 py-2 text-sm font-semibold transition ${
+            tab === 'contacts'
+              ? 'border-b-2 border-brand-red text-brand-red'
+              : 'text-gray-500 hover:text-brand-gray'
+          }`}
+        >
+          Contacts
+        </button>
       </div>
 
       <div className="mt-6">
-        {tab === 'events' ? <EventsManager /> : <VideosManager />}
+        {tab === 'events' && <EventsManager />}
+        {tab === 'videos' && <VideosManager />}
+        {tab === 'contacts' && <ContactsManager />}
       </div>
     </div>
   );
