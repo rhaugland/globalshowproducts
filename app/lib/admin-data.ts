@@ -203,10 +203,11 @@ export function getEvents(): AdminEvent[] {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
+      const defaultIds = new Set(['e1','e2','e3','e4','e5','e6','e7','e8','e9','e10']);
       const hasOldFormat = Array.isArray(parsed) && parsed.length > 0 && (
         !parsed[0].eventType ||
         parsed.length <= 4 ||
-        parsed.some((e: AdminEvent) => e.id === 'e5' && e.registrationUrl)
+        parsed.some((e: AdminEvent) => defaultIds.has(e.id) && e.registrationUrl)
       );
       if (hasOldFormat) {
         localStorage.removeItem(STORAGE_KEYS.events);
