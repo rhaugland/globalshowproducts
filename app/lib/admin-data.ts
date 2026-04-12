@@ -101,7 +101,6 @@ const DEFAULT_EVENTS: AdminEvent[] = [
     endTime: '15:30',
     location: 'Online (Zoom)',
     description: 'Free workshop for new retailers — learn how to evaluate wholesale suppliers, negotiate MOQs, and build a profitable product mix.',
-    registrationUrl: 'https://globalshowproducts.com/workshops/sourcing-101',
     eventType: 'workshop',
   },
   {
@@ -112,7 +111,6 @@ const DEFAULT_EVENTS: AdminEvent[] = [
     endTime: '12:00',
     location: 'Online (Zoom)',
     description: "Join our product team as they break down the hottest toy categories for summer 2026 and share insights on what's flying off shelves.",
-    registrationUrl: 'https://globalshowproducts.com/webinars/toy-trends',
     eventType: 'webinar',
   },
   {
@@ -125,7 +123,6 @@ const DEFAULT_EVENTS: AdminEvent[] = [
     location: 'AmericasMart, Atlanta, GA',
     description: 'Visit Booth 2247 to see our expanded home & garden line. Exclusive show pricing on bulk orders over $500.',
     imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80',
-    registrationUrl: 'https://globalshowproducts.com/atlanta-2026',
     eventType: 'trade-show',
   },
   {
@@ -136,7 +133,6 @@ const DEFAULT_EVENTS: AdminEvent[] = [
     endTime: '15:00',
     location: 'Online (Zoom)',
     description: 'Hands-on workshop covering markup strategies, competitive pricing analysis, and how to maximize margins on wholesale goods.',
-    registrationUrl: 'https://globalshowproducts.com/workshops/pricing',
     eventType: 'workshop',
   },
   {
@@ -147,7 +143,6 @@ const DEFAULT_EVENTS: AdminEvent[] = [
     endTime: '11:00',
     location: 'Online (Zoom)',
     description: 'Get a first look at 15+ new products dropping in Q3 — scooters, outdoor toys, and kitchen gadgets. Pre-order available for attendees.',
-    registrationUrl: 'https://globalshowproducts.com/webinars/q3-launch',
     eventType: 'webinar',
   },
   {
@@ -208,7 +203,12 @@ export function getEvents(): AdminEvent[] {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.length > 0 && (!parsed[0].eventType || parsed.length <= 4)) {
+      const hasOldFormat = Array.isArray(parsed) && parsed.length > 0 && (
+        !parsed[0].eventType ||
+        parsed.length <= 4 ||
+        parsed.some((e: AdminEvent) => e.id === 'e5' && e.registrationUrl)
+      );
+      if (hasOldFormat) {
         localStorage.removeItem(STORAGE_KEYS.events);
         return DEFAULT_EVENTS;
       }
