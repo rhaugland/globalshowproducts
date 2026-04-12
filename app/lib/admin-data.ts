@@ -182,12 +182,12 @@ export function getEventTypeLabel(type: EventType): string {
   return labels[type];
 }
 
-export function getEventTypeColor(type: EventType): {bg: string; text: string} {
-  const colors: Record<EventType, {bg: string; text: string}> = {
-    'trade-show': {bg: 'bg-pop-cyan/10', text: 'text-pop-cyan'},
-    workshop: {bg: 'bg-pop-green/10', text: 'text-pop-green'},
-    webinar: {bg: 'bg-pop-purple/10', text: 'text-pop-purple'},
-    other: {bg: 'bg-gray-100', text: 'text-gray-600'},
+export function getEventTypeColor(type: EventType): {bg: string; text: string; dot: string} {
+  const colors: Record<EventType, {bg: string; text: string; dot: string}> = {
+    'trade-show': {bg: 'bg-pop-cyan/10', text: 'text-pop-cyan', dot: 'bg-pop-cyan'},
+    workshop: {bg: 'bg-pop-green/10', text: 'text-pop-green', dot: 'bg-pop-green'},
+    webinar: {bg: 'bg-pop-purple/10', text: 'text-pop-purple', dot: 'bg-pop-purple'},
+    other: {bg: 'bg-gray-100', text: 'text-gray-600', dot: 'bg-gray-600'},
   };
   return colors[type];
 }

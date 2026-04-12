@@ -27,7 +27,7 @@ function buildEventDateSet(events: AdminEvent[]): Map<string, AdminEvent['eventT
     const end = ev.endDate ? new Date(ev.endDate + 'T00:00:00') : start;
     const cursor = new Date(start);
     while (cursor <= end) {
-      const iso = cursor.toISOString().slice(0, 10);
+      const iso = `${cursor.getFullYear()}-${String(cursor.getMonth() + 1).padStart(2, '0')}-${String(cursor.getDate()).padStart(2, '0')}`;
       if (!map.has(iso)) map.set(iso, ev.eventType);
       cursor.setDate(cursor.getDate() + 1);
     }
@@ -139,7 +139,7 @@ export function MiniCalendar({
               {day}
               {hasEvent && (
                 <span
-                  className={`absolute bottom-0.5 h-1 w-1 rounded-full ${typeColor!.text.replace('text-', 'bg-')}`}
+                  className={`absolute bottom-0.5 h-1 w-1 rounded-full ${typeColor!.dot}`}
                 />
               )}
             </button>
