@@ -21,6 +21,15 @@ export interface AdminEvent {
   eventType: EventType;
 }
 
+export interface EventAttendee {
+  id: string;
+  eventId: string;
+  name: string;
+  email: string;
+  company: string;
+  registeredAt: string;
+}
+
 const DEFAULT_VIDEOS: AdminVideo[] = [
   {id: 'v1', title: 'Slide-a-Bow-Maker - Carnation and Thistle Bow variations', youtubeId: '37yDhJENs4w', thumbnail: 'https://i4.ytimg.com/vi/37yDhJENs4w/hqdefault.jpg'},
   {id: 'v2', title: 'Slide-a-Bow-Maker - How to make a Pom Pom Bow', youtubeId: 'rCys7B0TFZE', thumbnail: 'https://i3.ytimg.com/vi/rCys7B0TFZE/hqdefault.jpg'},
@@ -154,9 +163,21 @@ const DEFAULT_EVENTS: AdminEvent[] = [
   },
 ];
 
+const DEFAULT_ATTENDEES: EventAttendee[] = [
+  {id: 'a1', eventId: 'e1', name: 'Sarah Chen', email: 'sarah.chen@retailplus.com', company: 'RetailPlus Inc.', registeredAt: '2026-03-15T10:30:00.000Z'},
+  {id: 'a2', eventId: 'e1', name: 'Marcus Johnson', email: 'marcus@giftshopcentral.com', company: 'Gift Shop Central', registeredAt: '2026-03-18T14:22:00.000Z'},
+  {id: 'a3', eventId: 'e2', name: 'Lisa Park', email: 'lisa.park@homegoods.co', company: 'HomeGoods Wholesale', registeredAt: '2026-04-01T09:15:00.000Z'},
+  {id: 'a4', eventId: 'e3', name: 'David Torres', email: 'david@midwestretail.com', company: 'Midwest Retail Group', registeredAt: '2026-04-05T16:45:00.000Z'},
+  {id: 'a5', eventId: 'e10', name: 'Amy Williams', email: 'amy.w@noveltyworld.com', company: 'Novelty World', registeredAt: '2026-04-08T11:00:00.000Z'},
+  {id: 'a6', eventId: 'e10', name: 'James Lee', email: 'james.lee@parkavegifts.com', company: 'Park Ave Gifts', registeredAt: '2026-04-09T13:30:00.000Z'},
+  {id: 'a7', eventId: 'e10', name: 'Rachel Morgan', email: 'rachel@shoplocalmn.com', company: 'Shop Local MN', registeredAt: '2026-04-10T08:20:00.000Z'},
+];
+
 const STORAGE_KEYS = {
   videos: 'gsp_admin_videos',
   events: 'gsp_admin_events',
+  attendees: 'gsp_admin_attendees',
+  userRsvps: 'gsp_user_rsvps',
 };
 
 function isBrowser() {
@@ -258,6 +279,71 @@ export function getEventTypeColor(type: EventType): {bg: string; text: string; d
     other: {bg: 'bg-gray-100', text: 'text-gray-600', dot: 'bg-gray-600'},
   };
   return colors[type];
+}
+
+export function getAttendees(): EventAttendee[] {
+  if (!isBrowser()) return DEFAULT_ATTENDEES;
+  const stored = localStorage.getItem(STORAGE_KEYS.attendees);
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return DEFAULT_ATTENDEES;
+    }
+  }
+  return DEFAULT_ATTENDEES;
+}
+
+export function saveAttendees(attendees: EventAttendee[]): void {
+  if (!isBrowser()) return;
+  localStorage.setItem(STORAGE_KEYS.attendees, JSON.stringify(attendees));
+}
+
+export function getAttendeesByEvent(eventId: string): EventAttendee[] {
+  return getAttendees().filter((a) => a.eventId === eventId);
+}
+
+export function addAttendee(data: {eventId: string; name: string; email: string; company: string}): EventAttendee {
+  const attendees = getAttendees();
+  const newAttendee: EventAttendee = {
+    id: `a_${Date.now()}`,
+    eventId: data.eventId,
+    name: data.name,
+    email: data.email,
+    company: data.company,
+    registeredAt: new Date().toISOString(),
+  };
+  attendees.push(newAttendee);
+  saveAttendees(attendees);
+  return newAttendee;
+}
+
+export function isAlreadyRegistered(eventId: string, email: string): boolean {
+  return getAttendees().some(
+    (a) => a.eventId === eventId && a.email.toLowerCase() === email.toLowerCase(),
+  );
+}
+
+export function getUserRsvps(): string[] {
+  if (!isBrowser()) return [];
+  const stored = localStorage.getItem(STORAGE_KEYS.userRsvps);
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+export function addUserRsvp(eventId: string): void {
+  if (!isBrowser()) return;
+  const rsvps = getUserRsvps();
+  if (!rsvps.includes(eventId)) {
+    rsvps.push(eventId);
+    localStorage.setItem(STORAGE_KEYS.userRsvps, JSON.stringify(rsvps));
+  }
 }
 
 export function adminLogin(username: string, password: string): boolean {
