@@ -39,14 +39,14 @@ type ViewMode = 'list' | 'create' | 'edit';
 
 // ─── API Helpers ─────────────────────────────────────────────────────────────
 
-const AUTH_HEADERS = {...AUTH_HEADERS} as const;
+const AUTH_HEADERS = {'X-Admin-Auth': 'globalshowproducts'} as const;
 
 async function fetchProducts(): Promise<AdminProduct[]> {
   const res = await fetch('/admin/api/products', {
     headers: {...AUTH_HEADERS},
   });
   if (!res.ok) throw new Error(`Failed to fetch products: ${res.statusText}`);
-  const data = await res.json() as Promise<{products: AdminProduct[]}>;
+  const data = await res.json() as {products: AdminProduct[]};
   return data.products;
 }
 
@@ -57,7 +57,7 @@ async function fetchProduct(
     headers: {...AUTH_HEADERS},
   });
   if (!res.ok) throw new Error(`Failed to fetch product: ${res.statusText}`);
-  const data = await res.json() as Promise<{product: AdminProduct; collectionIds: number[]}>;
+  const data = await res.json() as {product: AdminProduct; collectionIds: number[]};
   return data;
 }
 
@@ -66,7 +66,7 @@ async function fetchCollections(): Promise<AdminCollection[]> {
     headers: {...AUTH_HEADERS},
   });
   if (!res.ok) throw new Error(`Failed to fetch collections: ${res.statusText}`);
-  const data = await res.json() as Promise<{collections: AdminCollection[]}>;
+  const data = await res.json() as {collections: AdminCollection[]};
   return data.collections;
 }
 
@@ -84,7 +84,7 @@ async function saveProduct(
     },
     body: JSON.stringify({intent, id, formData, collectionIds}),
   });
-  const data = await res.json() as Promise<{product?: AdminProduct; error?: string}>;
+  const data = await res.json() as {product?: AdminProduct; error?: string};
   if (!res.ok || data.error) throw new Error(data.error ?? 'Save failed');
   return data.product!;
 }
@@ -98,7 +98,7 @@ async function archiveProductApi(id: number): Promise<void> {
     },
     body: JSON.stringify({intent: 'archive', id}),
   });
-  const data = await res.json() as Promise<{error?: string}>;
+  const data = await res.json() as {error?: string};
   if (!res.ok || data.error) throw new Error(data.error ?? 'Archive failed');
 }
 
