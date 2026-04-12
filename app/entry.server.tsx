@@ -1,47 +1,98 @@
 import {ServerRouter} from 'react-router';
 import {isbot} from 'isbot';
-import {renderToPipeableStream} from 'react-dom/server';
-import {PassThrough} from 'node:stream';
+import {renderToReadableStream} from 'react-dom/server';
+import {
+  createContentSecurityPolicy,
+  type HydrogenRouterContextProvider,
+} from '@shopify/hydrogen';
 import type {EntryContext} from 'react-router';
 
-export default function handleRequest(
+export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   reactRouterContext: EntryContext,
+  context: HydrogenRouterContextProvider,
 ) {
-  return new Promise<Response>((resolve, reject) => {
-    const {pipe, abort} = renderToPipeableStream(
-      <ServerRouter context={reactRouterContext} url={request.url} />,
-      {
-        onShellReady() {
-          const body = new PassThrough();
-          pipe(body);
+  const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+    shop: {
+      checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
+      storeDomain: context.env.PUBLIC_STORE_DOMAIN,
+    },
+    defaultSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://shopify.com',
+      'https://*.ngrok.dev',
+      'http://localhost:*',
+    ],
+    styleSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      'https://cdn.shopify.com',
+      'https://fonts.googleapis.com',
+      'http://localhost:*',
+    ],
+    fontSrc: [
+      "'self'",
+      'https://fonts.gstatic.com',
+      'http://localhost:*',
+    ],
+    scriptSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      'https://cdn.shopify.com',
+      'https://*.ngrok.dev',
+      'http://localhost:*',
+    ],
+    connectSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://*.ngrok.dev',
+      'http://localhost:*',
+      'ws://localhost:*',
+      'ws://*.ngrok.dev',
+    ],
+    imgSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://images.unsplash.com',
+      'data:',
+      'http://localhost:*',
+    ],
+  });
 
-          const chunks: Buffer[] = [];
-          body.on('data', (chunk: Buffer) => chunks.push(chunk));
-          body.on('end', () => {
-            const html = Buffer.concat(chunks).toString();
-            responseHeaders.set('Content-Type', 'text/html');
-            resolve(
-              new Response('<!DOCTYPE html>' + html, {
-                headers: responseHeaders,
-                status: responseStatusCode,
-              }),
-            );
-          });
-          body.on('error', reject);
-        },
-        onShellError(error: unknown) {
-          reject(error);
-        },
-        onError(error: unknown) {
-          responseStatusCode = 500;
-          console.error(error);
-        },
+  const body = await renderToReadableStream(
+    <NonceProvider>
+      <ServerRouter
+        context={reactRouterContext}
+        url={request.url}
+        nonce={nonce}
+      />
+    </NonceProvider>,
+    {
+      nonce,
+      signal: request.signal,
+      onError(error) {
+        console.error(error);
+        responseStatusCode = 500;
       },
-    );
+    },
+  );
 
-    setTimeout(abort, 10000);
+  if (isbot(request.headers.get('user-agent'))) {
+    await body.allReady;
+  }
+
+  responseHeaders.set('Content-Type', 'text/html');
+  const url = new URL(request.url);
+  const isLocalhost = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
+  if (isLocalhost) {
+    responseHeaders.set('Content-Security-Policy', header);
+  }
+
+  return new Response(body, {
+    headers: responseHeaders,
+    status: responseStatusCode,
   });
 }
